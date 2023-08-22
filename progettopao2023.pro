@@ -14,10 +14,7 @@ SOURCES += \
     disco.cpp \
     dvd.cpp \
     fumetto.cpp \
-    libro.cpp \
-    lista.cpp \
     main.cpp \
-    mainwindow.cpp \
     manuale.cpp \
     romanzo.cpp
 
@@ -27,15 +24,10 @@ HEADERS += \
     disco.h \
     dvd.h \
     fumetto.h \
-    libro.h \
-    lista.h \
-    mainwindow.h \
     manuale.h \
-    nodo.h \
     romanzo.h
 
-FORMS += \
-    mainwindow.ui
+FORMS +=
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

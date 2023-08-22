@@ -8,6 +8,7 @@ class Fumetto : public Libro {
 private:
   int numero;
 
+
 public:
   // costruttori
   Fumetto(string tit = "Titolo non definito",

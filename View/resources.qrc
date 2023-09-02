@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>dvd.png</file>
+    </qresource>
+</RCC>

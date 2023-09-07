@@ -1,7 +1,6 @@
 #ifndef MANUALE_H
 #define MANUALE_H
 #include "libro.h"
-// c++ Model/manuale.cpp Model/libro.cpp Model/articolo.cpp main.cpp -o main
 
 class Manuale : public Libro {
 private:
@@ -22,7 +21,11 @@ public:
     void setArgomento(const string& newArgomento);
 
     //metodi
-    //virtual void mostraDettagli() const override; //da implementare!! 
+    virtual void modificaDettagli(const string& newTitolo="", const string& newDescrizione="", int newDisponibilita=0, int newAnnoPubblicazione=0, 
+        const string& newAutore="", const string& newEditore="", int newPagine=0, const string& newGenereRomanzo="", int newNumero=0, const string& newArgomento="", 
+        int newDurata=0, const string& newRegista="", double newVoto=0, const string& newArtista="", const string& newGenereCD="", int newNumeroBrani=0);
+    virtual void modifica2();
+    virtual void mostraDettagli() const;
 };
 
 #endif // MANUALE_H

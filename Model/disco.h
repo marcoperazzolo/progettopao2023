@@ -1,11 +1,10 @@
 #ifndef DISCO_H
 #define DISCO_H
 #include"articolo.h"
-//c++ Model/disco.cpp Model/articolo.cpp main.cpp -o main
 
 class Disco : public Articolo {
 private:
-    int durata;
+    int durata;//specificare unità di misura
 
 public:
     //costruttori
@@ -20,7 +19,11 @@ public:
     void setDurata(int newDurata);
 
     //metodi
-    //virtual void mostraDettagli() const override; //da implementare?-
+    virtual void modificaDettagli(const string& newTitolo="", const string& newDescrizione="", int newDisponibilita=0, int newAnnoPubblicazione=0, 
+        const string& newAutore="", const string& newEditore="", int newPagine=0, const string& newGenereRomanzo="", int newNumero=0, const string& newArgomento="", 
+        int newDurata=0, const string& newRegista="", double newVoto=0, const string& newArtista="", const string& newGenereCD="", int newNumeroBrani=0);
+    virtual void modifica2();
+    virtual void mostraDettagli() const;
 };
 
 #endif // DISCO_H

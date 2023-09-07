@@ -1,115 +1,186 @@
 #ifndef LISTA_H
 #define LISTA_H
-//namespace??
-#include "articolo.h"
 
-//template <class T>
+template<class T>
 class Lista{
 private:
-//public:
     class Nodo{
     public:
-        Articolo* info;
-        //Nodo* prev;   vedere se rimettere
+        T* info;
         Nodo* next;
-        Nodo(Articolo* i, Nodo* n = 0): info(i), next(n){}; //Nodo(const T& i, Nodo* p = 0, Nodo* n = 0): info(i), prev(p), next(n){};
-        Articolo* getInfo() const{
+        Nodo(T* i, Nodo* n = 0): info(i), next(n) {}
+        //Nodo(const Nodo& n): info(n.info), next(n.next) {}//fare prove, togliere?
+        T* getInfo() const{
             return info;
         }
-        Nodo& setInfo(Articolo* newInfo){
-            this->info=newInfo;
-            return *this;
-        }
-        Nodo *getNext() const{
+        Nodo* getNext() const{
             return next;
         }
+        Nodo& setInfo(T* newInfo){
+            info=newInfo;
+            return *this;
+        }
         Nodo& setNext(Nodo* newNext){
-            this->next=newNext;
+            next=newNext;
             return *this;
         }
-        /*Nodo *getPrev() const{
-            return prev;
-        }
-        Nodo& setPrev(Nodo* newPrev){
-            this->prev=newPrev;
-            return *this;
-        }*/
-        /*T& operator*() const{
-            return info;
-        }*/
-        /*
-        T* operator->() const {
-            return *info;
-        }*/
     };
     Nodo* first;
-    //Nodo* last;  //vedere se rimettere
 public:
     Lista(): first(nullptr) {}
-    ~Lista() {
-        clear();
+    Lista(const Lista& l): first(nullptr) {
+        copia(l);
     }
+    ~Lista() {distruggi();}
 
-    //Marco: MI SERVE COSTRUTTORE DI COPIA
-
-    Nodo *getFirst() const{
+    Nodo* getFirst() const{
         return first;
     }
     unsigned int getDim() const{
-        unsigned int dim = 0;
-        Nodo* n = first;
-        while (n != nullptr) {
-            n = n->getNext();
+        Nodo* n=first;
+        unsigned int dim=0;
+        while (n!=nullptr) {
+            n=n->getNext();
             dim++;
         }
         return dim;
     }
-    Lista& inserisci(Articolo* t){
+    Lista& inserisci(T* t){//versione che inserisce in testa
         first=new Nodo(t, first);
         return *this;
     }
-/*
-    bool cerca(Nodo* v, T c){
-
+    Lista& inserisciInCoda(T* t){//versione che inserisce in coda
+        if(getDim()>0){
+            Nodo* n=new Nodo(t,nullptr);
+            Nodo* attuale=first;
+            while(attuale->getNext()!=nullptr){
+                attuale=attuale->getNext();
+            }
+            attuale->setNext(n);
+        }else{
+            inserisci(t);
+        }
+        return *this;
     }
-    void copia(Nodo* fst, Nodo*& n, Nodo* l){
-
+    
+    //decidere quale usare
+    Nodo& cerca(const T* t){//prima tornava un bool
+        Nodo* attuale=first;
+        while(attuale!=nullptr){
+            if(attuale->getInfo()==t){
+                return *attuale;
+            }
+            attuale=attuale->getNext();
+        }
+        return *attuale;
     }
-
-    void distruggi(Nodo* n){
-
+    bool cercaBool(const T* t){//prima tornava un bool
+        Nodo* attuale=first;
+        while(attuale!=nullptr){
+            if(attuale->getInfo()==t){
+                return true;
+            }
+            attuale=attuale->getNext();
+        }
+        return false;
+    }
+    /*Nodo& cerca(const T& t){//aggiungere uno che passa una stringa, prima tornava un bool
+        Nodo* attuale=first;
+        while(attuale!=nullptr){
+            if(attuale->getInfo()->getTitolo()==t.getTitolo()){
+                return *attuale;
+            }
+            attuale=attuale->getNext();
+        }
+        return *attuale;
     }*/
-    //robe aggiunte diritte
-    Lista& rimuovi(Articolo& x){//lavoro in corso
-        Nodo* precedente = nullptr;
-        Nodo* attuale = first;
-        while (attuale != nullptr) {
-            if (attuale->getInfo() == &x) {//rivedere x??
-                if (precedente != nullptr) {
+    
+    /*Lista& rimuoviCoda(){
+        Nodo* attuale=first;
+        Nodo* precedente=nullptr;
+        while(attuale->getNext()!=nullptr){
+            precedente=attuale;
+            attuale=attuale->getNext();
+        }
+        delete attuale;
+        precedente->setNext(nullptr);
+        return *this;
+    }
+    Lista& spostaDaCodaATesta(){
+        Nodo* attuale=first;
+        Nodo* coda=nullptr;
+        unsigned int dim=getDim();
+        while(dim>1){
+            attuale=attuale->getNext();
+            dim--;
+            coda=attuale;
+        }
+        inserisci(attuale->getInfo());
+        rimuoviCoda();
+        return *this;
+    }*/
+
+    Lista& copia(const Lista& l){
+        if(this!=&l){
+            if(this!=nullptr){
+                distruggi();
+            }
+            Nodo* attuale=l.first;
+            while(attuale!=nullptr){
+                inserisciInCoda(attuale->getInfo());
+                attuale=attuale->getNext();
+            }
+        }
+        return *this;
+    }
+
+    //inserire metodo per lettura
+    void lettura() const{//vedere come lo hanno fatto, da cambiare
+        Nodo* attuale=first;
+        while(attuale!=nullptr){
+            attuale->getInfo()->mostraDettagli();
+            attuale=attuale->getNext();
+        }
+    }
+    Nodo& lettura2(const T* t){//ritorna un nodo che deve essere usato per vedere l'elemento
+        Nodo* attuale=first;
+        while(attuale!=nullptr){
+            if(attuale->getInfo()==t){
+                return *attuale;
+            }
+            attuale=attuale->getNext();
+        }
+        return *attuale;
+    }
+
+    Lista& rimuovi(T& t){
+        Nodo* precedente=nullptr;
+        Nodo* attuale=first;
+        while(attuale!=nullptr){
+            if(attuale->getInfo()==&t){
+                if(precedente!=nullptr){
                     precedente->setNext(attuale->getNext());
                 }
-                else {
-                    first = attuale->getNext();
+                else{
+                    first=attuale->getNext();
                 }
                 delete attuale;
                 return *this;
             }
-            precedente = attuale;
-            attuale = attuale->getNext();
+            precedente=attuale;
+            attuale=attuale->getNext();
         }
         return *this;
     }
-    Lista& clear() {
-        while (first != nullptr) {
-            Nodo* next = first->getNext();
-            delete first;
-            first = next;
-        }
-        return *this;
-    }
-    
-    
-};
 
+    Lista& distruggi(){
+        while (first!=nullptr) {
+            Nodo* next=first->getNext();
+            delete first;
+            first=next;
+        }
+        return *this;
+    }
+};
 
 #endif //LISTA_H

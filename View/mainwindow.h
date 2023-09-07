@@ -27,6 +27,8 @@
 class MainWindow : public QWidget{
     Q_OBJECT
 private:
+    ListaArticoli* listaarticoli;
+
     //FINESTRE E WIDGET CENTRALE
     QMainWindow w;
     QWidget* centralWidget;
@@ -50,7 +52,6 @@ private:
 
     //SCROLLBAR E OGGETTI
     //QListWidget* listaOggetti = new QListWidget(centralWidget);
-    ListaArticoli* lista;
 
 public:
     MainWindow(QWidget *parent = nullptr);

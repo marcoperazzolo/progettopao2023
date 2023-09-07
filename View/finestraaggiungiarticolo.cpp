@@ -26,9 +26,11 @@ FinestraAggiungiArticolo::FinestraAggiungiArticolo(QWidget* parent) : QDialog(pa
     layout->addLayout(buttonLayout);
 
     //CONNECT
-    connect(confermaButton, &QPushButton::clicked, this, &FinestraModificaArticolo::confermaModifiche);
-    connect(annullaButton, &QPushButton::clicked, this, &FinestraModificaArticolo::reject);
+    //connect(confermaButton, &QPushButton::clicked, this, &FinestraModificaArticolo::confermaModifiche);
+    //connect(annullaButton, &QPushButton::clicked, this, &FinestraModificaArticolo::reject);
 
     setLayout(layout);
     setWindowTitle("Modifica Articolo");
 }
+
+FinestraAggiungiArticolo::~FinestraAggiungiArticolo() = default;

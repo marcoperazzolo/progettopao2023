@@ -50,6 +50,8 @@ public:
         clear();
     }
 
+    //Marco: MI SERVE COSTRUTTORE DI COPIA
+
     Nodo *getFirst() const{
         return first;
     }

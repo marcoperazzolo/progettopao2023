@@ -38,20 +38,27 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
     searchLayout->addWidget(aggiungiArticoloButton);
 
     //LISTA ARTICOLI
-    lista = new ListaArticoli(centralWidget);
-    lista->aggiungiArticolo("Oppenheimer", "Parla della storia della bomba atomica", 3);
-    lista->aggiungiArticolo("Barbie", "Parla di femminismo del cazzo", 6);
-    lista->aggiungiArticolo("Titolo", "Descrizione  descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione", 100);
+    listaarticoli = new ListaArticoli(centralWidget);
+
+    DVD* Oppenheimer = new DVD("Oppenheimer", "Storia bomba atomica", 9, 2023, 180, "Nolan", 5);
+    listaarticoli->aggiungiArticolo(Oppenheimer);
+    CD* Utopia = new CD("Utopia", "Album dell'anno", 5, 2023, 120, "Travis Scott", "Rap", 12);
+    listaarticoli->aggiungiArticolo(Utopia);
+    Libro* PiccoloPrincipe = new Libro("Piccolo Principe", "Principe bambino", 0, 1998, "Santoine Exupery", "Bohnomelli", 320);
+    listaarticoli->aggiungiArticolo(PiccoloPrincipe);
+
+    //listaarticoli->aggiungiArticolo("Barbie", "Parla di femminismo del cazzo", 6);
+    //lista->aggiungiArticolo("Titolo", "Descrizione  descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione", 100);
 
 
     //SETTING FINALE LAYOUT
     mainLayout->addWidget(menuBar);
     mainLayout->addLayout(searchLayout);
     //scrollArea->setWidget(listaOggetti);
-    mainLayout->addWidget(lista);
+    mainLayout->addWidget(listaarticoli);
     //listaOggetti->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
-    connect(lista, &ListaArticoli::itemDoubleClicked, this, &MainWindow::mostraDettagliArticolo);
+    connect(listaarticoli, &ListaArticoli::itemDoubleClicked, this, &MainWindow::mostraDettagliArticolo);
 
     //SHOW
     w.show();
@@ -60,10 +67,10 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
 MainWindow::~MainWindow() {};
 
 void MainWindow::mostraDettagliArticolo(QListWidgetItem* item) {
-    WidgetArticolo* widgetArticolo = dynamic_cast<WidgetArticolo*>(lista->itemWidget(item));
+    WidgetArticolo* widgetArticolo = dynamic_cast<WidgetArticolo*>(listaarticoli->itemWidget(item));
     if (widgetArticolo) {
-       WidgetArticolo* wa = widgetArticolo->clone();
-       FinestraDettagliArticolo* dialog = new FinestraDettagliArticolo(wa, this);
+       //WidgetArticolo* wa = widgetArticolo->clone();
+       FinestraDettagliArticolo* dialog = new FinestraDettagliArticolo(widgetArticolo, this);
        //dialog->apriFinestraModifica(); // Passa l'istanza di ListaArticoli
 
        dialog->exec();

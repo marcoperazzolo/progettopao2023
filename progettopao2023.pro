@@ -15,25 +15,15 @@ SOURCES += \
     Model/dvd.cpp \
     Model/fumetto.cpp \
     Model/libro.cpp \
-    Model/main.cpp \
     Model/manuale.cpp \
     Model/romanzo.cpp \
     View/finestraaggiungiarticolo.cpp \
     View/finestradettagliarticolo.cpp \
     View/finestramodificaarticolo.cpp \
     View/listaarticoli.cpp \
-    View/main.cpp \
+    main.cpp \
     View/mainwindow.cpp \
     View/widgetarticolo.cpp \
-    articolo.cpp \
-    cd.cpp \
-    disco.cpp \
-    dvd.cpp \
-    fumetto.cpp \
-    libro.cpp \
-    main.cpp \
-    manuale.cpp \
-    romanzo.cpp
 
 HEADERS += \
     Model/articolo.h \
@@ -51,18 +41,9 @@ HEADERS += \
     View/listaarticoli.h \
     View/mainwindow.h \
     View/widgetarticolo.h \
-    articolo.h \
-    cd.h \
-    disco.h \
-    dvd.h \
-    fumetto.h \
-    libro.h \
-    lista.h \
-    manuale.h \
-    romanzo.h
+
 
 FORMS += \
-    View/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -70,10 +51,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 SUBDIRS += \
+    View/untitled.pro \
     View/untitled.pro
 
 RESOURCES += \
+    View/resources.qrc \
     View/resources.qrc
 
 DISTFILES += \
+    README.md \
     View/dvd.png

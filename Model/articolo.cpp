@@ -16,7 +16,7 @@ int Articolo::getDisponibilita() const{
 int Articolo::getAnnoPubblicazione() const{
   return annoPubblicazione;
 }
-string Articolo::getGenere() const{}
+//string Articolo::getGenere() const{}
 
 void Articolo::setTitolo(const string& newTitolo) {
   titolo=newTitolo;

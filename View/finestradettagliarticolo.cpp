@@ -21,7 +21,6 @@ FinestraDettagliArticolo::FinestraDettagliArticolo(Articolo* art, QWidget* paren
     titoloLabel->setFont(fontTitolo);
 
     //Descrizione
-
     descrizioneLabel = new QLabel(QString::fromStdString(art->getDescrizione()), this);
     descrizioneLabel->setWordWrap(true);
 
@@ -45,7 +44,7 @@ FinestraDettagliArticolo::FinestraDettagliArticolo(Articolo* art, QWidget* paren
         immagine = QPixmap(":img/dvd.png");
     }
     if(dynamic_cast<Fumetto*>(art)){
-            immagine = QPixmap(":img/dvd.png");
+        immagine = QPixmap(":img/dvd.png");
     }
     immagine = immagine.scaled(100, 100, Qt::KeepAspectRatioByExpanding);
     immagineLabel->setPixmap(immagine);
@@ -78,15 +77,6 @@ FinestraDettagliArticolo::FinestraDettagliArticolo(Articolo* art, QWidget* paren
             layout->addWidget(genereMusicaleLabel);
             layout->addWidget(numbrani);
             layout->addWidget(numbraniLabel);
-            //Nascondo le altre, ma serve davvero?
-            /*registaLabel->setVisible(false);
-            votoLabel->setVisible(false);
-            autoreLabel->setVisible(false);
-            pagineLabel->setVisible(false);
-            editoreLabel->setVisible(false);
-            genereLabel->setVisible(false);
-            argomentoLabel->setVisible(false);
-            numeroLabel->setVisible(false);*/
         }
         if(dynamic_cast<DVD*>(articolo)){
             registaLabel = new QLabel(QString::fromStdString(articolo->getRegista()), this);
@@ -95,23 +85,14 @@ FinestraDettagliArticolo::FinestraDettagliArticolo(Articolo* art, QWidget* paren
             layout->addWidget(registaLabel);
             layout->addWidget(voto);
             layout->addWidget(votoLabel);
-            /*artistaLabel->setVisible(false);
-            genereMusicaleLabel->setVisible(false);
-            numbraniLabel->setVisible(false);
-            autoreLabel->setVisible(false);
-            pagineLabel->setVisible(false);
-            editoreLabel->setVisible(false);
-            genereLabel->setVisible(false);
-            argomentoLabel->setVisible(false);
-            numeroLabel->setVisible(false);*/
         }
     }
     if(dynamic_cast<Libro*>(articolo)){
-        artistaLabel = new QLabel(QString::fromStdString(articolo->getArtista()), this);
+        autoreLabel = new QLabel(QString::fromStdString(articolo->getAutore()), this);
         pagine = new QLabel(QString("Pagine:"));
         pagineLabel = new QLabel(QString::number(articolo->getPagine()), this);
         editoreLabel = new QLabel(QString::fromStdString(articolo->getEditore()), this);
-        layout->addWidget(artistaLabel);
+        layout->addWidget(autoreLabel);
         layout->addWidget(pagine);
         layout->addWidget(pagineLabel);
         layout->addWidget(editoreLabel);
@@ -119,22 +100,18 @@ FinestraDettagliArticolo::FinestraDettagliArticolo(Articolo* art, QWidget* paren
         if(dynamic_cast<Romanzo*>(articolo)){
             genereLabel = new QLabel(QString::fromStdString(articolo->getGenereRomanzo()), this);
             layout->addWidget(genereLabel);
-            //Nascondi?
         }
         if(dynamic_cast<Manuale*>(articolo)){
             argomentoLabel = new QLabel(QString::fromStdString(articolo->getArgomento()), this);
             layout->addWidget(argomentoLabel);
-            //Nascondi?
         }
         if(dynamic_cast<Fumetto*>(articolo)){
             QLabel* numero = new QLabel(QString("Numero:"));
             numeroLabel = new QLabel(QString::number(articolo->getNumero()), this);
             layout->addWidget(numero);
             layout->addWidget(numeroLabel);
-            //Nascondi?
         }
     }
-    //Devo nascondere le non necessarie?
 
 
     //BUTTONS
@@ -143,9 +120,6 @@ FinestraDettagliArticolo::FinestraDettagliArticolo(Articolo* art, QWidget* paren
 
     //Connect
     connect(modificaButton, &QPushButton::clicked, this, &FinestraDettagliArticolo::apriFinestraModifica);
-    //connect(this, SIGNAL(eliminaArticoloCommand(WidgetArticolo*, Articolo*)), this, SLOT(passaComandoEliminaArticolo(WidgetArticolo*, Articolo*)));
-    //connect(this, SIGNAL(eliminaArticoloCommand), this, SLOT(passaComandoEliminaArticolo));
-    //connect(this, SIGNAL(aggiornaDettagli(Articolo*)), this, SLOT(aggiornaDettagli(Articolo*)));
 
     //Imposta layout
     setLayout(layout);
@@ -157,13 +131,15 @@ void FinestraDettagliArticolo::apriFinestraModifica(){
     FinestraModificaArticolo finestramodarticolo(articolo, this);
     //connect(FinestraEliminaArticolo, SIGNAL(articoloEliminato(Articolo*)), this, SLOT(gestisciArticoloEliminato(Articolo*)));
     connect(&finestramodarticolo, SIGNAL(modificheConfermate()), this, SLOT(refreshDettagli()));
+    connect(&finestramodarticolo, SIGNAL(signalEliminaArticolo(Articolo*)), this, SLOT(slotEliminaArticolo(Articolo*)));
     finestramodarticolo.exec();
 }
 
-/*void FinestraDettagliArticolo::passaComandoEliminaArticolo(Articolo* art) {
+void FinestraDettagliArticolo::slotEliminaArticolo(Articolo* art) {
         // Emetti il segnale per passare il comando all'InterfacciaUtente
-        emit articoloEliminatoCommand(art);
-}*/
+        emit articoloEliminatoSignal(art);
+        accept();
+}
 
 void FinestraDettagliArticolo::refreshDettagli(){
     titoloLabel->setText(QString::fromStdString(articolo->getTitolo()));
@@ -185,7 +161,7 @@ void FinestraDettagliArticolo::refreshDettagli(){
         }
     }
     if(dynamic_cast<Libro*>(articolo)){
-        artistaLabel->setText(QString::fromStdString(articolo->getArtista()));
+        autoreLabel->setText(QString::fromStdString(articolo->getAutore()));
         pagineLabel->setText(QString::number(articolo->getPagine()));
         editoreLabel->setText(QString::fromStdString(articolo->getEditore()));
         immagine = QPixmap(":img/dvd.png");

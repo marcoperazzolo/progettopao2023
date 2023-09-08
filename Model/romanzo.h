@@ -16,7 +16,7 @@ public:
     virtual ~Romanzo();
 
     //getter
-    string getGenereRomanzo() const;//cambiato sia questo che quello in cd per conflitto
+    virtual string getGenereRomanzo() const;//cambiato sia questo che quello in cd per conflitto
 
     //setter
     void setGenereRomanzo(const string& newGenere);

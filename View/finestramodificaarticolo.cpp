@@ -132,36 +132,35 @@ void FinestraModificaArticolo::confermaModifiche() {
                 }
             }
         }
+
         //LIBRO
         if(Libro* libro = dynamic_cast<Libro*>(articolo)){
             //Autore
-            string newAutore = (QString(autoreLineEdit->text())).toStdString();
+            std::string newAutore = (QString(autoreLineEdit->text())).toStdString();
             libro->setAutore(newAutore);
-
             //Pagine
             if(int newNumPagine = std::stoi(((QString(numPagineLineEdit->text())).toStdString()))){
                 libro->setPagine(newNumPagine);
             } else {
-                libro->setPagine(-1);
+                libro->setPagine(0);
             }
 
             //Editore
-            string newEditore = (QString(editoreLineEdit->text())).toStdString();
+            std::string newEditore = (QString(editoreLineEdit->text())).toStdString();
             libro->setEditore(newEditore);
 
             //ROMANZO
-            if(Romanzo* romanzo = dynamic_cast<Romanzo*>(articolo)){
+            if(Romanzo* romanzo = dynamic_cast<Romanzo*>(libro)){
 
                 //Genere
-                string newGenere = (QString(genereLineEdit->text())).toStdString();
+                std::string newGenere = (QString(genereLineEdit->text())).toStdString();
                 romanzo->setGenereRomanzo(newGenere);
             }
 
             //MANUALE
             if(Manuale* manuale = dynamic_cast<Manuale*>(articolo)){
-
                 //Argomento
-                string newArgomento = (QString(argomentoLineEdit->text())).toStdString();
+                std::string newArgomento = (QString(argomentoLineEdit->text())).toStdString();
                 manuale->setArgomento(newArgomento);
             }
 
@@ -179,7 +178,6 @@ void FinestraModificaArticolo::confermaModifiche() {
 
 
     //REFRESH
-    //da chiamare refresh del dettaglio e della lista (art*)
     emit modificheConfermate();
 
     //accept();
@@ -187,6 +185,6 @@ void FinestraModificaArticolo::confermaModifiche() {
 }
 
 void FinestraModificaArticolo::eliminaArticolo() {
-    emit eliminaArticoloCommand(articolo);
-    close(); //Credo??
+    emit signalEliminaArticolo(articolo);
+    close();
 }

@@ -15,7 +15,7 @@ class FinestraDettagliArticolo : public QDialog
 private:
     WidgetArticolo* widgetArticolo;
     Articolo* articolo;
-    //FinestraModificaArticolo* finestramodarticolo;
+
     //Layout
     QHBoxLayout* riga;
     QVBoxLayout* testi;
@@ -68,9 +68,10 @@ public slots:
     void apriFinestraModifica();
     void refreshDettagli();
     void refreshDettagli(Articolo* art);
+    void slotEliminaArticolo(Articolo* art);
 
 signals:
-    void articoloEliminatoCommand(Articolo* art);
+    void articoloEliminatoSignal(Articolo* art);
     void aggiornaLista();
 };
 

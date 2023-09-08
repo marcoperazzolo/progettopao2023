@@ -43,6 +43,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     DVD* Oppenheimer = new DVD("Oppenheimer", "Storia bomba atomica", 9, 180, "Nolan", 5);
     CD* Utopia = new CD("Utopia", "Album dell'anno", 5, 120, "Travis Scott", "Rap", 12);
     Romanzo* PiccoloPrincipe = new Romanzo("Piccolo Principe", "Principe bambino", 0, "Santoine Exupery", "Bohnomelli", 150,  "Bambini");
+    Manuale* Bricolage = new Manuale("Bricolage", "Manuale", 6, "Boscaiolo", "Legnosi", 150,  "Manodopera");
+    Fumetto* Topolino = new Fumetto("Topolino", "Paperinik e Topolino", 133, "Topolino spa", "Kinder", 150,  352);
+    listaarticoli->aggiungiArticolo(Bricolage);
+    listaarticoli->aggiungiArticolo(Topolino);
 
     listaarticoli->aggiungiArticolo(Oppenheimer);
     listaarticoli->aggiungiArticolo(Utopia);
@@ -65,12 +69,9 @@ MainWindow::~MainWindow() = default;
 void MainWindow::mostraDettagliArticolo(QListWidgetItem* item) {
     WidgetArticolo* widgetArticolo = dynamic_cast<WidgetArticolo*>(listaarticoli->itemWidget(item));
     if (widgetArticolo) {
-        finestradettarticolo = new FinestraDettagliArticolo(widgetArticolo->getArticolo(), this);
-       //dialog->apriFinestraModifica(); // Passa l'istanza di ListaArticoli
-       //connect(this, SIGNAL(articoloEliminatoCommand(WidgetArticolo* wart, Articolo* art)), this, SLOT(eliminaArticolo(WidgetArticolo* wart, Articolo* art)));
-       //connect(dialog, SIGNAL(articoloEliminatoCommand), this, SLOT(eliminaArticolo));
+       finestradettarticolo = new FinestraDettagliArticolo(widgetArticolo->getArticolo(), this);
        connect(finestradettarticolo, SIGNAL(aggiornaLista()), this, SLOT(refresh()));
-       //connect(finestradettaglichiusa->refreshlistaarticoli)
+       connect(finestradettarticolo, SIGNAL(articoloEliminatoSignal(Articolo*)), this, SLOT(eliminaArticolo(Articolo*)));
        finestradettarticolo->exec();
     }
 }

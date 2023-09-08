@@ -46,7 +46,7 @@ public:
 
 
 signals:
-    void eliminaArticoloCommand(Articolo* art);
+    void signalEliminaArticolo(Articolo* art);
     void modificheConfermate();
 
 public slots:

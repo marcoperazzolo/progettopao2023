@@ -114,7 +114,7 @@ void FinestraModificaArticolo::confermaModifiche() {
                 if(int newNumBrani = std::stoi(((QString(numBraniLineEdit->text())).toStdString()))){
                     cd->setNumeroBrani(newNumBrani);
                 } else {
-                    cd->setDisponibilita(-1);
+                    cd->setNumeroBrani(-1);
                 }
             }
 

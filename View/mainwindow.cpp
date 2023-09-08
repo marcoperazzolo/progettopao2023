@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     menuBiblioteca = new QMenu("Biblioteca...", menuBar);
     //Actions: le aggiungo al menu
     actionApri = new QAction("Apri", menuBiblioteca);
-    actionSalva = new QAction("Salva", menuBiblioteca);     //actionAggiungiArticolo = new QAction("Aggiungi Articolo, menuBiblioteca);
+    actionSalva = new QAction("Salva", menuBiblioteca);
     menuBiblioteca->addAction(actionApri);
     menuBiblioteca->addAction(actionSalva);                //menuBiblioteca->addAction(actionAggiungiArticolo);
     //aggiungo Menu alla barra
@@ -60,8 +60,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     //listaOggetti->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
     connect(listaarticoli, &ListaArticoli::itemDoubleClicked, this, &MainWindow::mostraDettagliArticolo);
-
-
+    connect(aggiungiArticoloButton, &QPushButton::clicked, this, &MainWindow::apriFinestraAggiunta);
 }
 
 MainWindow::~MainWindow() = default;
@@ -82,4 +81,15 @@ void MainWindow::eliminaArticolo(Articolo* art){
 
 void MainWindow::refresh(){
     listaarticoli->refreshLista();
+}
+
+void MainWindow::apriFinestraAggiunta(){
+    finestraaggiunta = new FinestraAggiungiArticolo(this);
+    connect(finestraaggiunta, SIGNAL(segnaleNuovoArticolo(Articolo*)), this, SLOT(aggiungiArticolo(Articolo*)));
+
+    finestraaggiunta->exec();
+}
+
+void MainWindow::aggiungiArticolo(Articolo* art){
+    listaarticoli->aggiungiArticolo(art);
 }

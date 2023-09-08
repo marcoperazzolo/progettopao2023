@@ -21,6 +21,7 @@
 #include "widgetarticolo.h"
 #include "listaarticoli.h"
 #include "finestradettagliarticolo.h"
+#include "finestraaggiungiarticolo.h"
 
 #include<QDialog>
 
@@ -30,6 +31,7 @@ class MainWindow : public QMainWindow {
 private:
     ListaArticoli* listaarticoli;
     FinestraDettagliArticolo* finestradettarticolo;
+    FinestraAggiungiArticolo* finestraaggiunta;
 
     WidgetArticolo* widgetItem;
     WidgetArticolo* wasource;
@@ -70,6 +72,8 @@ public:
 public slots:
     void refresh(); //serve a refreshare la lista oggetti
     void mostraDettagliArticolo(QListWidgetItem* item);
+    void apriFinestraAggiunta();
+    void aggiungiArticolo(Articolo* art);
     void eliminaArticolo(Articolo* art);
 };
 

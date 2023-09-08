@@ -126,7 +126,6 @@ FinestraDettagliArticolo::FinestraDettagliArticolo(Articolo* art, QWidget* paren
     setWindowTitle("Dettaglio Articolo");
 }
 
-
 void FinestraDettagliArticolo::apriFinestraModifica(){
     FinestraModificaArticolo finestramodarticolo(articolo, this);
     //connect(FinestraEliminaArticolo, SIGNAL(articoloEliminato(Articolo*)), this, SLOT(gestisciArticoloEliminato(Articolo*)));

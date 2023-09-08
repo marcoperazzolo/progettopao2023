@@ -34,6 +34,7 @@ void ListaArticoli::aggiungiWidgetArticolo(WidgetArticolo* widget) {
     addItem(listItem);
 
     update();
+    refreshLista();
 }
 
 void ListaArticoli::eliminaArticolo(Articolo* art) {

@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "finestradettagliarticolo.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     //FINESTRA E WIDGET
@@ -59,6 +58,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     mainLayout->addWidget(listaarticoli);
     //listaOggetti->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
+    connect(cercaButton, &QPushButton::clicked, this, &MainWindow::cercaButtonPremuto);
     connect(listaarticoli, &ListaArticoli::itemDoubleClicked, this, &MainWindow::mostraDettagliArticolo);
     connect(aggiungiArticoloButton, &QPushButton::clicked, this, &MainWindow::apriFinestraAggiunta);
 }
@@ -93,3 +93,43 @@ void MainWindow::apriFinestraAggiunta(){
 void MainWindow::aggiungiArticolo(Articolo* art){
     listaarticoli->aggiungiArticolo(art);
 }
+
+void MainWindow::cercaButtonPremuto(){
+    titolocercato = (QString(barraRicerca->toPlainText())).toStdString();
+
+    if (titolocercato ==""){
+        listaarticoli->show();
+        if(listarisultati){
+            listarisultati->hide();
+        }
+        update();
+    }
+    else{
+        if(listaarticoli->getLista()->cercadaTitolo(titolocercato)){
+            listarisultati = new ListaArticoli(this);
+            listarisultati->aggiungiArticolo(listaarticoli->getLista()->cercadaTitolo(titolocercato));
+            listaarticoli->hide();
+            mainLayout->addWidget(listarisultati);
+            connect(listarisultati, &ListaArticoli::itemDoubleClicked, this, &MainWindow::mostraDettagliArticolo);
+            listarisultati->show();
+            update();
+        }else{
+            listarisultati = new ListaArticoli(this);
+            listaarticoli->hide();
+            mainLayout->addWidget(listarisultati);
+            listarisultati->show();
+            update();
+        }
+    }
+}
+
+/*void MainWindow::mostraNuovaLista(ListaArticoli* newvista){
+    nuovavista = newvista;
+    listaarticoli->hide();
+    mainLayout->addWidget(nuovavista);
+}
+
+void MainWindow::ripristinaVista(){
+    nuovavista->close();
+    listaarticoli->show();
+}*/

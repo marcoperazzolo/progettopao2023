@@ -58,6 +58,8 @@ private:
     QPushButton* cercaButton;
     QPushButton* aggiungiArticoloButton;
 
+    ListaArticoli* listarisultati;
+    string titolocercato;
     //SCROLLBAR E OGGETTI
     //QListWidget* listaOggetti = new QListWidget(centralWidget);
 
@@ -75,6 +77,12 @@ public slots:
     void apriFinestraAggiunta();
     void aggiungiArticolo(Articolo* art);
     void eliminaArticolo(Articolo* art);
+
+    void cercaButtonPremuto();
+
+    //void mostraNuovaLista(ListaArticoli* nuovavista);
+    //void ripristinaVista();
+
 };
 
 #endif // MAINWINDOW_H

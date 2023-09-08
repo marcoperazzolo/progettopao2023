@@ -1,6 +1,7 @@
 #ifndef LISTA_H
 #define LISTA_H
 
+#include <string>
 template<class T>
 class Lista{
 public:
@@ -79,6 +80,7 @@ public:
         }
         return *attuale;
     }
+
     bool cercaBool(const T* t){//prima tornava un bool
         Nodo* attuale=first;
         while(attuale!=nullptr){
@@ -89,16 +91,17 @@ public:
         }
         return false;
     }
-    /*Nodo& cerca(const T& t){//aggiungere uno che passa una stringa, prima tornava un bool
+
+    T* cercadaTitolo(std::string& titolo){
         Nodo* attuale=first;
         while(attuale!=nullptr){
-            if(attuale->getInfo()->getTitolo()==t.getTitolo()){
-                return *attuale;
+            if(attuale->getInfo()->getTitolo() == titolo) {
+                return attuale->getInfo();
             }
             attuale=attuale->getNext();
         }
-        return *attuale;
-    }*/
+        return nullptr;
+    }
     
     /*Lista& rimuoviCoda(){
         Nodo* attuale=first;

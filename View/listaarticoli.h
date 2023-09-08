@@ -17,7 +17,7 @@ public:
     ListaArticoli(QWidget* parent = nullptr);
     ListaArticoli(Lista<Articolo>* lis, QWidget* parent = nullptr);
     ~ListaArticoli();
-
+    Lista<Articolo>* getLista() const;
 public slots:
     //OPERAZIONI SUGLI ARTICOLI
     void aggiungiArticolo(Articolo* articolo);
@@ -27,6 +27,10 @@ public slots:
 
     //REFRESH
     void refreshLista();
+
+    //void cercaDaBarra(string titolo, MainWindow* parent = nullptr);
+    //Lista<Articolo>* creaListaRisultati(string titolo);
+
 };
 
 #endif // LISTAARTICOLI_H

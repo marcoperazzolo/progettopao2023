@@ -83,3 +83,41 @@ void ListaArticoli::refreshLista() {
         }
     update();
 }
+
+/*void ListaArticoli::refreshLista(Lista<Articolo>* lis) {
+    backup = model;
+    Lista<Articolo>::Nodo* nodo = lis->getFirst();
+        while (nodo) {
+            // Ottieni l'Articolo dal Nodo
+            Articolo* art = nodo->getInfo();
+
+            // Cerca il widget corrispondente all'Articolo
+            for (int i = 0; i < count(); ++i) {
+                QListWidgetItem* item = this->item(i);
+                WidgetArticolo* widgetArticolo = dynamic_cast<WidgetArticolo*>(itemWidget(item));
+
+                if (widgetArticolo && widgetArticolo->getArticolo() == art) {
+                    // Aggiorna il widgetArticolo con i dati dell'Articolo
+                    widgetArticolo->refreshWidget();
+                    break;
+                }
+            }
+            nodo = nodo->getNext();
+        }
+    update();
+}*/
+
+
+Lista<Articolo>* ListaArticoli::getLista() const{
+    return model;
+}
+
+/*void ListaArticoli::cercaDaBarra(string titolo){
+    Lista<Articolo>* listarisultati = new Lista<Articolo>();
+    listarisultati->inserisci(model->cercadaTitolo(titolo));
+    if(titolo==""){
+        this->refreshLista(model);
+    }else{
+        this->refreshLista(listarisultati);
+    }
+}*/

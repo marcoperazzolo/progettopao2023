@@ -1,52 +1,51 @@
 #include "widgetarticolo.h"
 
-WidgetArticolo::WidgetArticolo(Articolo* art, QWidget* parent) : QWidget(parent)
+WidgetArticolo::WidgetArticolo(Articolo* art, QWidget* parent) : QWidget(parent), articolo(art)
 {
-    articolo = art;
-    //creo layout
+    //Layout
     riga = new QHBoxLayout(this);
     testi = new QVBoxLayout(this);
 
-    //converto std::string -> QString
-    qTitolo = QString::fromStdString(art->getTitolo());
-    qDescrizione = QString::fromStdString(art->getDescrizione());
-
-    //creo etichette
-    titoloLabel = new QLabel(qTitolo, this);
+    //Titolo
+    titoloLabel = new QLabel(QString::fromStdString(art->getTitolo()), this);
     fontTitolo = titoloLabel->font();
     fontTitolo.setPointSize(14);
     titoloLabel->setFont(fontTitolo);
 
-    descrizioneLabel = new QLabel(qDescrizione, this);
+    //Descrizione
+    descrizioneLabel = new QLabel(QString::fromStdString(art->getDescrizione()), this);
     descrizioneLabel->setWordWrap(true);
 
+    //Disponibilità
     disponibilitaLabel = new QLabel(QString("Disponibilità: %1 ").arg(art->getDisponibilita()), this);
 
-    //creo immagine
+    //Immagine
     immagineLabel = new QLabel(this);
-    if(CD* cd = dynamic_cast<CD*>(art)){
-        setCDLabels(cd->getDurata(), cd->getArtista(), cd->getGenere(), cd->getNumeroBrani());
+    if(dynamic_cast<CD*>(art)){
+        immagine = QPixmap(":img/dvd.png");
     }
-    if(DVD* dvd = dynamic_cast<DVD*>(art)){
-        setDVDLabels(dvd->getDurata(), dvd->getRegista(), dvd->getVoto());
+    if(dynamic_cast<DVD*>(art)){
+        immagine = QPixmap(":img/dvd.png");
     }
-    if(Manuale* manuale = dynamic_cast<Manuale*>(art)){
-        setManualeLabels(manuale->getAutore(), manuale->getPagine(), manuale->getEditore(), manuale->getArgomento());
-    }
-    if(Romanzo* romanzo = dynamic_cast<Romanzo*>(art)){
-        setRomanzoLabels(romanzo->getAutore(), romanzo->getPagine(), romanzo->getEditore(), romanzo->getGenere());
-    }
-    if(Fumetto* fumetto = dynamic_cast<Fumetto*>(art)){
-        setFumettoLabels(fumetto->getAutore(), fumetto->getPagine(), fumetto->getEditore(), fumetto->getNumero());
-    }
+    if(dynamic_cast<Manuale*>(art)){
+        immagine = QPixmap(":img/dvd.png");
 
+    }
+    if(dynamic_cast<Romanzo*>(art)){
+        immagine = QPixmap(":img/dvd.png");
 
-    //aggiungo etichette
+    }
+    if(dynamic_cast<Fumetto*>(art)){
+        immagine = QPixmap(":img/dvd.png");
+    }
+    immagine = immagine.scaled(100, 100, Qt::KeepAspectRatioByExpanding);
+    immagineLabel->setPixmap(immagine);
+
+    //Aggiungo Layout e Widget
     testi->addWidget(titoloLabel);
     testi->addWidget(descrizioneLabel);
     testi->addWidget(disponibilitaLabel);
     testi->addStretch();
-
     riga->addWidget(immagineLabel);
     riga->addLayout(testi);
 
@@ -56,97 +55,82 @@ WidgetArticolo::WidgetArticolo(Articolo* art, QWidget* parent) : QWidget(parent)
 }
 
 
-
 //REFRESH
-void WidgetArticolo::refreshWidget(Articolo* articolo){
-    //prendo valori dall'articolo (local)
-    setTitolo(articolo->getTitolo());
-    qDescrizione = QString::fromStdString(articolo->getDescrizione());
+void WidgetArticolo::refreshWidget(Articolo* art){
+    //Aggiorno Labels da Articolo art
+    setTitoloLabel(art->getTitolo());
+    setDescrizioneLabel(art->getDescrizione());
+    setDisponibilitaLabel(art->getDisponibilita());
 
-    //li setto nelle label
-    titoloLabel->setText(qTitolo);
-    descrizioneLabel->setText(qDescrizione);
-    disponibilitaLabel->setText((QString("Disponibilità: %1 ").arg(articolo->getDisponibilita())));
-
-    //aggiorno immagine: DA FINIRE
-    if(dynamic_cast<Disco*>(articolo)){
+    //Aggiorno immagine
+    if(dynamic_cast<CD*>(art)){
         immagine = QPixmap(":img/dvd.png");
     }
-    if(dynamic_cast<Libro*>(articolo)){
-        immagine = QPixmap(":img/libro.png");
+    if(dynamic_cast<DVD*>(art)){
+        immagine = QPixmap(":img/dvd.png");
     }
-    immagineLabel->setPixmap(immagine);
-    this->articolo=articolo;
+    if(dynamic_cast<Manuale*>(art)){
+        immagine = QPixmap(":img/dvd.png");
+    }
+    if(dynamic_cast<Romanzo*>(art)){
+        immagine = QPixmap(":img/dvd.png");
+    }
+    if(dynamic_cast<Fumetto*>(art)){
+        immagine = QPixmap(":img/dvd.png");
+    }
+    //Aggiorno Articolo locale
+    articolo=art;
 
+    update();
 }
 
+void WidgetArticolo::refreshWidget(){
+    //Aggiorno Labels da Articolo local
+    setTitoloLabel(articolo->getTitolo());
+    setDescrizioneLabel(articolo->getDescrizione());
+    setDisponibilitaLabel(articolo->getDisponibilita());
+
+    //Aggiorno immagine
+    if(CD* cd = dynamic_cast<CD*>(articolo))
+        immagine = QPixmap(":img/dvd.png");
+    if(DVD* dvd = dynamic_cast<DVD*>(articolo))
+        immagine = QPixmap(":img/dvd.png");
+    if(Manuale* manuale = dynamic_cast<Manuale*>(articolo))
+        immagine = QPixmap(":img/dvd.png");
+    if(Romanzo* romanzo = dynamic_cast<Romanzo*>(articolo))
+        immagine = QPixmap(":img/dvd.png");
+    if(Fumetto* fumetto = dynamic_cast<Fumetto*>(articolo))
+        immagine = QPixmap(":img/dvd.png");
+
+    update();
+}
 
 
 //SETTER
-void WidgetArticolo::setTitolo(const std::string& titolo){
-    qTitolo = QString::fromStdString(titolo);
-    titoloLabel->setText(qTitolo);
+void WidgetArticolo::setTitoloLabel(const std::string& titolo){
+    titoloLabel->setText(QString::fromStdString(titolo));
 }
-
-void WidgetArticolo::setDescrizione(const std::string& descrizione){
-    qDescrizione = QString::fromStdString(descrizione);
-    descrizioneLabel->setText(qDescrizione);
+void WidgetArticolo::setDescrizioneLabel(const std::string& descrizione){
+    descrizioneLabel->setText(QString::fromStdString(descrizione));
 }
-
-void WidgetArticolo::setDisponibilita(const int& disponibilita){
+void WidgetArticolo::setDisponibilitaLabel(const int& disponibilita){
     disponibilitaLabel->setText(QString("Disponibilità: %1 ").arg(disponibilita));
 }
-
-void WidgetArticolo::setCDLabels(int durata, std::string artista, std::string genereMusicale, int numeroBrani){
-    durataLabel = new QLabel(QString("Durata: %1 ").arg(durata), this);
-    artistaLabel = new QLabel(QString::fromStdString(artista), this);
-    genereMusicaleLabel = new QLabel(QString::fromStdString(genereMusicale), this);
-    numbraniLabel = new QLabel(QString("Num. Brani: %1 ").arg(numeroBrani), this);
-    immagine = QPixmap(":img/dvd.png");
-    immagine = immagine.scaled(100, 100, Qt::KeepAspectRatioByExpanding);
-    immagineLabel->setPixmap(immagine);
-}
-
-void WidgetArticolo::setDVDLabels(int durata, std::string regista, double votoCritica){
-    durataLabel = new QLabel(QString("Durata: %1 ").arg(durata), this);
-    registaLabel = new QLabel(QString::fromStdString(regista), this);
-    votoLabel = new QLabel(QString("Voto: %1 ").arg(votoCritica), this);
-    immagine = QPixmap(":img/dvd.png");
-    immagine = immagine.scaled(100, 100, Qt::KeepAspectRatioByExpanding);
-    immagineLabel->setPixmap(immagine);
-}
-
-void WidgetArticolo::setManualeLabels(std::string autore, int pagine, std::string editore, std::string argomento){
-    autoreLabel = new QLabel(QString::fromStdString(autore), this);
-    pagineLabel = new QLabel(QString("Num. pagine: %1 ").arg(pagine), this);
-    editoreLabel = new QLabel(QString::fromStdString(editore), this);
-    argomentoLabel = new QLabel(QString::fromStdString(argomento), this);
-    immagine = QPixmap(":img/libro.png");
-    immagine = immagine.scaled(100, 100, Qt::KeepAspectRatioByExpanding);
-    immagineLabel->setPixmap(immagine);
-}
-
-void WidgetArticolo::setRomanzoLabels(std::string autore, int pagine, std::string editore, std::string genere){
-    autoreLabel = new QLabel(QString::fromStdString(autore), this);
-    pagineLabel = new QLabel(QString("Num. pagine: %1 ").arg(pagine), this);
-    editoreLabel = new QLabel(QString::fromStdString(editore), this);
-    genereLabel = new QLabel(QString::fromStdString(genere), this);
-    immagine = QPixmap(":img/libro.png");
-    immagine = immagine.scaled(100, 100, Qt::KeepAspectRatioByExpanding);
-    immagineLabel->setPixmap(immagine);
-
-}
-void WidgetArticolo::setFumettoLabels(std::string autore, int pagine, std::string editore, int numfumetto){
-    autoreLabel = new QLabel(QString::fromStdString(autore), this);
-    pagineLabel = new QLabel(QString("Num. pagine: %1 ").arg(pagine), this);
-    editoreLabel = new QLabel(QString::fromStdString(editore), this);
-    numeroLabel = new QLabel(QString("Num. fumetto: %1 ").arg(numfumetto), this);
-    immagine = QPixmap(":img/libro.png");
-    immagine = immagine.scaled(100, 100, Qt::KeepAspectRatioByExpanding);
-    immagineLabel->setPixmap(immagine);
+void WidgetArticolo::setImmagine(const std::string& tipo){
+    if(tipo == "CD")
+        immagine = QPixmap(":img/dvd.png");
+    if(tipo == "DVD")
+        immagine = QPixmap(":img/dvd.png");
+    if(tipo == "Romanzo")
+        immagine = QPixmap(":img/dvd.png");
+    if(tipo == "Manuale")
+        immagine = QPixmap(":img/dvd.png");
+    if(tipo == "Fumetto")
+        immagine = QPixmap(":img/dvd.png");
 }
 
 
+/*
 void WidgetArticolo::setDurata(int durata){
     durataLabel->setText((QString("Durata: %1 ").arg(durata)));
 }
@@ -183,18 +167,12 @@ void WidgetArticolo::setArgomento(std::string argomento){
 void WidgetArticolo::setNumFumetto(int numero){
     numeroLabel->setText((QString("Numero: %1 ").arg(numero)));
 }
+*/
 
 //GETTER
 Articolo* WidgetArticolo::getArticolo() const{
     return articolo;
 }
-QString WidgetArticolo::getqTitolo() const{
-    return qTitolo;
-}
-QString WidgetArticolo::getqDescrizione() const{
-    return qDescrizione;
-}
-
 QLabel* WidgetArticolo::getTitoloLabel() const{
     return titoloLabel;
 }
@@ -204,7 +182,11 @@ QLabel* WidgetArticolo::getDescrizioneLabel() const{
 QLabel* WidgetArticolo::getDisponibilitaLabel() const{
     return disponibilitaLabel;
 }
+QPixmap WidgetArticolo::getImmagine() const{
+    return immagine;
+}
 
+/* GETTERS VECCHI
 //Disco
 QLabel* WidgetArticolo::getDurataLabel() const{
     return durataLabel;
@@ -249,7 +231,7 @@ QLabel* WidgetArticolo::getArgomentoLabel() const{
 QLabel* WidgetArticolo::getNumeroLabel() const{
     return numeroLabel;
 }
-/*WidgetArticolo::WidgetArticolo(const std::string& titolo, const std::string& descrizione, int disponibilita, QWidget* parent) : QWidget(parent)
+WidgetArticolo::WidgetArticolo(const std::string& titolo, const std::string& descrizione, int disponibilita, QWidget* parent) : QWidget(parent)
 {
     //creo layout
     riga = new QHBoxLayout(this);
@@ -290,8 +272,7 @@ QLabel* WidgetArticolo::getNumeroLabel() const{
     setLayout(riga);
 }*/
 
-/* NON SO SE SERVE
- * WidgetArticolo* WidgetArticolo::clone() {
+/*WidgetArticolo* WidgetArticolo::clone() {
     WidgetArticolo* nuovo = new WidgetArticolo(this->getTitolo(), this->getDescrizione(), this->getDisponibilita());
     //nuovo->setTitolo(this->getTitolo());
     //nuovo->setDescrizione(this->getDescrizione());

@@ -10,7 +10,7 @@ private:
 
 public:
     //costruttori
-    CD(string tit = "Titolo non definito", string des="Descrizione non definita", int dis=0, int annopub=0, int dur=0, string art="Artista non definito", string gen="Genere non definito", int numBr=0);
+    CD(string tit = "Titolo non definito", string des="Descrizione non definita", int dis=0, int dur=0, string art="Artista non definito", string gen="Genere non definito", int numBr=0);
     
     virtual ~CD();
 
@@ -25,7 +25,7 @@ public:
     void setNumeroBrani(int newNumeroBrani);
 
     //metodi
-    virtual void modificaDettagli(const string& newTitolo="", const string& newDescrizione="", int newDisponibilita=0, int newAnnoPubblicazione=0, 
+    virtual void modificaDettagli(const string& newTitolo="", const string& newDescrizione="", int newDisponibilita=0, 
         const string& newAutore="", const string& newEditore="", int newPagine=0, const string& newGenereRomanzo="", int newNumero=0, const string& newArgomento="", 
         int newDurata=0, const string& newRegista="", double newVoto=0, const string& newArtista="", const string& newGenereCD="", int newNumeroBrani=0);
     virtual void modifica2();

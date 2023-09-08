@@ -1,6 +1,6 @@
 #include "cd.h"
 
-CD::CD(string tit, string des, int dis, int annopub, int dur, string art, string gen, int numBr): Disco(tit, des, dis, annopub, dur), artista(art), genere(gen), numBrani(numBr) {}
+CD::CD(string tit, string des, int dis, int dur, string art, string gen, int numBr): Disco(tit, des, dis, dur), artista(art), genere(gen), numBrani(numBr) {}
     
 CD::~CD()=default;
 
@@ -25,13 +25,12 @@ void CD::setNumeroBrani(int newNumeroBrani){
     numBrani=newNumeroBrani;
 }
 
-void CD::modificaDettagli(const string& newTitolo, const string& newDescrizione, int newDisponibilita, int newAnnoPubblicazione, 
+void CD::modificaDettagli(const string& newTitolo, const string& newDescrizione, int newDisponibilita, 
   const string& newAutore, const string& newEditore, int newPagine, const string& newGenereRomanzo, int newNumero, const string& newArgomento, 
   int newDurata, const string& newRegista, double newVoto, const string& newArtista, const string& newGenereCD, int newNumeroBrani){
     setTitolo(newTitolo);
     setDescrizione(newDescrizione);
     setDisponibilita(newDisponibilita);
-    setAnnoPubblicazione(newAnnoPubblicazione);
     /*setAutore(newAutore);
     setEditore(newEditore);
     setPagine(newPagine);
@@ -50,7 +49,6 @@ void CD::modifica2(){
   string newTitolo;
   string newDescrizione;
   int newDisponibilita;
-  int newAnnoPubblicazione;
   int newDurata;
   string newArtista;
   string newGenereCD;
@@ -58,7 +56,6 @@ void CD::modifica2(){
   cin>>newTitolo;
   cin>>newDescrizione;
   cin>>newDisponibilita;
-  cin>>newAnnoPubblicazione;
   cin>>newDurata;
   cin>>newArtista;
   cin>>newGenereCD;
@@ -66,7 +63,6 @@ void CD::modifica2(){
   setTitolo(newTitolo);
   setDescrizione(newDescrizione);
   setDisponibilita(newDisponibilita);
-  setAnnoPubblicazione(newAnnoPubblicazione);
   setDurata(newDurata);
   setArtista(newArtista);
   setGenereCD(newGenereCD);
@@ -74,6 +70,6 @@ void CD::modifica2(){
 }
 
 void CD::mostraDettagli() const{
-  std::cout<<"Titolo: "<<getTitolo()<<", Descrizione: "<<getDescrizione()<<", Disponibilita': "<<getDisponibilita()<<", Anno di pubblicazione: "<<getAnnoPubblicazione()
+  std::cout<<"Titolo: "<<getTitolo()<<", Descrizione: "<<getDescrizione()<<", Disponibilita': "<<getDisponibilita()
   <<", Durata: "<<getDurata()<<", Artista: "<<getArtista()<<", Genere: "<<getGenereCD()<<", Numero brani: "<<getNumeroBrani()<<std::endl;
 }

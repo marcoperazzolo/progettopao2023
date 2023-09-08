@@ -10,11 +10,11 @@ class FinestraModificaArticolo : public QDialog
 {
     Q_OBJECT
 private:
-    WidgetArticolo* widgetArticolo;
+    Articolo* articolo;
+
     QLineEdit* titoloLineEdit;
     QTextEdit* descrizioneTextEdit;
     QLineEdit* disponibilitaLineEdit;
-
     //Disco
     QLineEdit* durataLineEdit;
     //DVD
@@ -36,20 +36,23 @@ private:
     QLineEdit* numFumettoLineEdit;
 
 
-
     QPushButton* confermaButton;
     QPushButton* eliminaButton;
     QPushButton* annullaButton;
+
 public:
-    FinestraModificaArticolo(WidgetArticolo* articolo, QWidget* parent = nullptr);
-    ~FinestraModificaArticolo();
+    FinestraModificaArticolo(Articolo* art, QWidget* parent = nullptr);
+    ~FinestraModificaArticolo() = default;
 
+
+signals:
+    void eliminaArticoloCommand(Articolo* art);
+    void modificheConfermate();
+
+public slots:
     void confermaModifiche();
-    void eliminaArticolo();
-
-    QString getTitolo() const;
-    QString getDisponibilita() const;
-    QString getDescrizione() const;
+    void eliminaArticolo(); //Emesso quando un viene premuto Elimina su wart e art, risponde la Listaarticoli
+    //void modificatoArticolo(WidgetArticolo* wart, Articolo* art); //Emesso quando viene premuto Conferma, teoricamente l'articolo è già stato modificato bisogna aggiornare la vista
 };
 
 #endif // FINESTRAMODIFICAARTICOLO_H

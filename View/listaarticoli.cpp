@@ -1,56 +1,84 @@
 #include "listaarticoli.h"
 
-ListaArticoli::ListaArticoli(QWidget* parent) : QListWidget(parent) { }
+//COSTRUTTORI
+ListaArticoli::ListaArticoli(QWidget* parent) : QListWidget(parent) {
+    model = new Lista<Articolo>();
+    //widgetarticoli;
+}
+ListaArticoli::ListaArticoli(Lista<Articolo>* lis, QWidget* parent): QListWidget(parent), model(lis){
+    refreshLista();
+}
+ListaArticoli::~ListaArticoli(){
+    delete model;
+}
 
 
-/*void ListaArticoli::aggiungiArticolo(std::string tit, std::string desc, int disp){
-    WidgetArticolo* temp = new WidgetArticolo (tit, desc, disp);
-    QListWidgetItem* tempItem = new QListWidgetItem(this);
-    //tempItem->setSizeHint(temp->sizeHint());
-    tempItem->setSizeHint(QSize(0, 120));
-    setItemWidget(tempItem, temp);
-}*/
-
+//OPERAZIONI SU ARTICOLI (MODEL E VISTA)
 void ListaArticoli::aggiungiArticolo(Articolo* art){
-    lista->inserisci(art);
-    WidgetArticolo* temp = new WidgetArticolo (art);
-    QListWidgetItem* tempItem = new QListWidgetItem(this);
-    //tempItem->setSizeHint(temp->sizeHint());
-    tempItem->setSizeHint(QSize(0, 120));
-    setItemWidget(tempItem, temp);
+    //Model
+    model->inserisci(art);
+    //View
+    WidgetArticolo* widget = new WidgetArticolo (art);
+    aggiungiWidgetArticolo(widget);
 }
 
-void ListaArticoli::aggiungiWidgetArticolo(Articolo* articolo){
-    WidgetArticolo* widgetArticolo = new WidgetArticolo(articolo);
+/*void ListaArticoli::aggiungiWidgetArticolo(Articolo* articolo){
+    WidgetArticolo* widgetArticolo = new WidgetArticolo(articolo, this);
     aggiungiWidgetArticolo(widgetArticolo);
+*/
+
+void ListaArticoli::aggiungiWidgetArticolo(WidgetArticolo* widget) {
+    QListWidgetItem* listItem = new QListWidgetItem(this);
+    setItemWidget(listItem, widget);
+    listItem->setSizeHint(QSize(0, 120));
+    addItem(listItem);
+
+    update();
 }
 
-void ListaArticoli::aggiungiWidgetArticolo(WidgetArticolo* widgetArticolo) {
-    QListWidgetItem* item = new QListWidgetItem(this);
-    setItemWidget(item, widgetArticolo);
-    widgetarticoli.push_back(widgetArticolo);
-}
+void ListaArticoli::eliminaArticolo(Articolo* art) {
+    model->rimuovi(*art);
 
-void ListaArticoli::aggiornaArticolo(int index, const std::string& titolo, const std::string& descrizione, int disponibilita) {
-    if (index >= 0 && index < count()) {
-        QListWidgetItem* item = this->item(index);
+    // Cerca il widget corrispondente all'Articolo e rimuovilo dalla QListWidget
+    for (int i = 0; i < count(); ++i) {
+        QListWidgetItem* item = this->item(i);
         WidgetArticolo* widgetArticolo = dynamic_cast<WidgetArticolo*>(itemWidget(item));
-        if (widgetArticolo) {
-            widgetArticolo->setTitolo(titolo);
-            widgetArticolo->setDescrizione(descrizione);
-            widgetArticolo->setDisponibilita(disponibilita);
 
-            // Aggiorna la visualizzazione dell'articolo nella lista
-            itemWidget(item)->update();
+        if (widgetArticolo && widgetArticolo->getArticolo() == art) {
+            // Rimuovi il widget dalla QListWidget
+            takeItem(i);
+
+            // Elimina l'oggetto WidgetArticolo
+            delete widgetArticolo;
+
+            break;
         }
     }
+
+    // Aggiorna la vista
+    update();
 }
 
 
-/*void ListaArticoli::eliminaArticolo(W) {
-    QListWidgetItem* item = new QListWidgetItem(this);
-    setItemWidget(item, widgetArticolo);
-    widgetarticoli.push_back(widgetArticolo);
-}*/
+//REFRESH
+void ListaArticoli::refreshLista() {
+    Lista<Articolo>::Nodo* nodo = model->getFirst();
+        while (nodo) {
+            // Ottieni l'Articolo dal Nodo
+            Articolo* art = nodo->getInfo();
 
+            // Cerca il widget corrispondente all'Articolo
+            for (int i = 0; i < count(); ++i) {
+                QListWidgetItem* item = this->item(i);
+                WidgetArticolo* widgetArticolo = dynamic_cast<WidgetArticolo*>(itemWidget(item));
 
+                if (widgetArticolo && widgetArticolo->getArticolo() == art) {
+                    // Aggiorna il widgetArticolo con i dati dell'Articolo
+                    widgetArticolo->refreshWidget();
+                    break;
+                }
+            }
+            nodo = nodo->getNext();
+        }
+    update();
+}

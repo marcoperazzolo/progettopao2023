@@ -17,53 +17,44 @@ class WidgetArticolo : public QWidget {
     Q_OBJECT
 private:
     Articolo* articolo;
+
+    //Layout
     QHBoxLayout* riga;
     QVBoxLayout* testi;
 
-    QLabel* immagineLabel;
-    QPixmap immagine;
-
+    //Labels
     QLabel* titoloLabel;
     QLabel* descrizioneLabel;
     QLabel* disponibilitaLabel;
-
-    QString qTitolo;
-    QString qDescrizione;
     QFont fontTitolo;
 
-    //Disco
-    QLabel* durataLabel;
-    //CD
-    QLabel* artistaLabel;
-    QLabel* genereMusicaleLabel;
-    QLabel* numbraniLabel;
-    //DVD
-    QLabel* registaLabel;
-    QLabel* votoLabel;
-
-    //Libro
-    QLabel* autoreLabel;
-    QLabel* pagineLabel;
-    QLabel* editoreLabel;
-    //Romanzo
-    QLabel* genereLabel;
-    //Manuale
-    QLabel* argomentoLabel;
-    //Fumetto
-    QLabel* numeroLabel;
+    //Immagine
+    QLabel* immagineLabel;
+    QPixmap immagine;
 
 public:
-    //WidgetArticolo(const std::string& titolo="ATTENZIONE: Titolo non inserito", const std::string& descrizione="ATTENZIONE: Descrizione non inserita", int disponibilita=-1, QWidget* parent=nullptr);
-    WidgetArticolo(Articolo* art=nullptr, QWidget* parent=nullptr);
+    //COSTRUTTORI E DISTRUTTORI
+    WidgetArticolo(Articolo* art, QWidget* parent=nullptr);
+    ~WidgetArticolo() = default;
 
-    ~WidgetArticolo() { };
+    //REFRESH
+    void refreshWidget(Articolo* art);
+    void refreshWidget();
 
-    //WidgetArticolo(const WidgetArticolo& wa);
-    WidgetArticolo* clone();
+    //GETTERS
+    Articolo* getArticolo() const;
+    QLabel* getTitoloLabel() const;
+    QLabel* getDescrizioneLabel() const;
+    QLabel* getDisponibilitaLabel() const;
+    QPixmap getImmagine() const;
 
-    void setTitolo(const std::string& titolo);
-    void setDescrizione(const std::string& descrizione);
-    void setDisponibilita(const int& disponibilita);
+    //SETTERS
+    void setTitoloLabel(const std::string& titolo);
+    void setDescrizioneLabel(const std::string& descrizione);
+    void setDisponibilitaLabel(const int& disponibilita);
+    void setImmagine(const std::string& tipo);
+
+
 
 
     /*void setqTitolo(const std::string& titolo="ATTENZIONE: Titolo non inserito");
@@ -72,7 +63,7 @@ public:
     void setTitoloLabel();
     void setDescrizioneLabel();
     void setDisponibilitaLabel();*/
-    void setCDLabels(int durata, std::string artista, std::string genereMusicale, int numeroBrani);
+    /* void setCDLabels(int durata, std::string artista, std::string genereMusicale, int numeroBrani);
     void setDVDLabels(int durata, std::string regista, double votoCritica);
     void setManualeLabels(std::string autore, int pagine, std::string editore, std::string argomento);
     void setRomanzoLabels(std::string autore, int pagine, std::string editore, std::string genere);
@@ -88,18 +79,8 @@ public:
     void setEditore(std::string editore);
     void setGenere(std::string genere);
     void setArgomento(std::string argomento);
-    void setNumFumetto(int numero);
-
-
-    Articolo* getArticolo() const;
-    QString getqTitolo() const;
-    QString getqDescrizione() const;
-    QLabel* getTitoloLabel() const;
-    QLabel* getDescrizioneLabel() const;
-    QLabel* getDisponibilitaLabel() const;
-    QPixmap getImmagine();
-
-    //Disco
+    void setNumFumetto(int numero);éarticol */
+    /*Disco
     QLabel* getDurataLabel() const;
     //CD
     QLabel* getArtistaLabel() const;
@@ -118,11 +99,7 @@ public:
     //Manuale
     QLabel* getArgomentoLabel() const;
     //Fumetto
-    QLabel* getNumeroLabel() const;
-
-    void refreshWidget(Articolo* articolo);
-    void refresh();
-
+    QLabel* getNumeroLabel() const;*/
 };
 
 #endif // WIDGETARTICOLO_H

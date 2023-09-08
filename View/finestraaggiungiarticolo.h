@@ -23,7 +23,7 @@ private:
 
 public:
     FinestraAggiungiArticolo(QWidget* parent = nullptr);
-     ~FinestraAggiungiArticolo();
+     ~FinestraAggiungiArticolo() = default;
 };
 
 #endif // FINESTRAAGGIUNGIARTICOLO_H

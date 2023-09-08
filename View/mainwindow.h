@@ -20,17 +20,23 @@
 
 #include "widgetarticolo.h"
 #include "listaarticoli.h"
+#include "finestradettagliarticolo.h"
 
 #include<QDialog>
 
 
-class MainWindow : public QWidget{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 private:
     ListaArticoli* listaarticoli;
+    FinestraDettagliArticolo* finestradettarticolo;
+
+    WidgetArticolo* widgetItem;
+    WidgetArticolo* wasource;
+    WidgetArticolo* wadettaglio;
 
     //FINESTRE E WIDGET CENTRALE
-    QMainWindow w;
+    //QMainWindow w;
     QWidget* centralWidget;
 
     //LAYOUT
@@ -57,12 +63,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void refresh(); //serve a refreshare la lista oggetti
+
     //void aggiungiArticolo(Articolo* a);
     //void aggiungiArticolo(std::string tit="!Titolo non inizializzato!", std::string desc="!Descrizione non inizializzata", int disp=0);
 
 public slots:
+    void refresh(); //serve a refreshare la lista oggetti
     void mostraDettagliArticolo(QListWidgetItem* item);
+    void eliminaArticolo(Articolo* art);
 };
 
 #endif // MAINWINDOW_H

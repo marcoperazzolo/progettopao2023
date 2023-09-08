@@ -1,12 +1,12 @@
 #include "mainwindow.h"
 #include "finestradettagliarticolo.h"
 
-MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     //FINESTRA E WIDGET
-    w.setWindowTitle("Progetto Biblioteca");
-    w.setGeometry(100, 100, 1200, 400);
-    centralWidget = new QWidget(&w);
-    w.setCentralWidget(centralWidget);
+    setWindowTitle("Progetto Biblioteca");
+    setGeometry(100, 100, 1200, 400);
+    centralWidget = new QWidget(this);
+    setCentralWidget(centralWidget);
 
     //LAYOUT
     mainLayout = new QVBoxLayout(centralWidget);
@@ -40,41 +40,45 @@ MainWindow::MainWindow(QWidget* parent) : QWidget(parent) {
     //LISTA ARTICOLI
     listaarticoli = new ListaArticoli(centralWidget);
 
-    DVD* Oppenheimer = new DVD("Oppenheimer", "Storia bomba atomica", 9, 2023, 180, "Nolan", 5);
-    listaarticoli->aggiungiArticolo(Oppenheimer);
-    CD* Utopia = new CD("Utopia", "Album dell'anno", 5, 2023, 120, "Travis Scott", "Rap", 12);
-    listaarticoli->aggiungiArticolo(Utopia);
-    Libro* PiccoloPrincipe = new Libro("Piccolo Principe", "Principe bambino", 0, 1998, "Santoine Exupery", "Bohnomelli", 320);
-    listaarticoli->aggiungiArticolo(PiccoloPrincipe);
+    DVD* Oppenheimer = new DVD("Oppenheimer", "Storia bomba atomica", 9, 180, "Nolan", 5);
+    CD* Utopia = new CD("Utopia", "Album dell'anno", 5, 120, "Travis Scott", "Rap", 12);
+    Romanzo* PiccoloPrincipe = new Romanzo("Piccolo Principe", "Principe bambino", 0, "Santoine Exupery", "Bohnomelli", 150,  "Bambini");
 
-    //listaarticoli->aggiungiArticolo("Barbie", "Parla di femminismo del cazzo", 6);
-    //lista->aggiungiArticolo("Titolo", "Descrizione  descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione descrizione", 100);
+    listaarticoli->aggiungiArticolo(Oppenheimer);
+    listaarticoli->aggiungiArticolo(Utopia);
+    listaarticoli->aggiungiArticolo(PiccoloPrincipe);
 
 
     //SETTING FINALE LAYOUT
     mainLayout->addWidget(menuBar);
     mainLayout->addLayout(searchLayout);
-    //scrollArea->setWidget(listaOggetti);
     mainLayout->addWidget(listaarticoli);
     //listaOggetti->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
     connect(listaarticoli, &ListaArticoli::itemDoubleClicked, this, &MainWindow::mostraDettagliArticolo);
 
-    //SHOW
-    w.show();
+
 }
 
-MainWindow::~MainWindow() {};
+MainWindow::~MainWindow() = default;
 
 void MainWindow::mostraDettagliArticolo(QListWidgetItem* item) {
     WidgetArticolo* widgetArticolo = dynamic_cast<WidgetArticolo*>(listaarticoli->itemWidget(item));
     if (widgetArticolo) {
-       //WidgetArticolo* wa = widgetArticolo->clone();
-       FinestraDettagliArticolo* dialog = new FinestraDettagliArticolo(widgetArticolo, this);
+        finestradettarticolo = new FinestraDettagliArticolo(widgetArticolo->getArticolo(), this);
        //dialog->apriFinestraModifica(); // Passa l'istanza di ListaArticoli
-
-       dialog->exec();
+       //connect(this, SIGNAL(articoloEliminatoCommand(WidgetArticolo* wart, Articolo* art)), this, SLOT(eliminaArticolo(WidgetArticolo* wart, Articolo* art)));
+       //connect(dialog, SIGNAL(articoloEliminatoCommand), this, SLOT(eliminaArticolo));
+       connect(finestradettarticolo, SIGNAL(aggiornaLista()), this, SLOT(refresh()));
+       //connect(finestradettaglichiusa->refreshlistaarticoli)
+       finestradettarticolo->exec();
     }
 }
 
+void MainWindow::eliminaArticolo(Articolo* art){
+    listaarticoli->eliminaArticolo(art);
+}
 
+void MainWindow::refresh(){
+    listaarticoli->refreshLista();
+}

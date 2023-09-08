@@ -3,7 +3,7 @@
 
 template<class T>
 class Lista{
-private:
+public:
     class Nodo{
     public:
         T* info;
@@ -25,6 +25,7 @@ private:
             return *this;
         }
     };
+private:
     Nodo* first;
 public:
     Lista(): first(nullptr) {}
@@ -49,6 +50,9 @@ public:
         first=new Nodo(t, first);
         return *this;
     }
+    void inserisci2(T* t){//versione che inserisce in testa
+        first=new Nodo(t, first);
+    }
     Lista& inserisciInCoda(T* t){//versione che inserisce in coda
         if(getDim()>0){
             Nodo* n=new Nodo(t,nullptr);
@@ -63,7 +67,8 @@ public:
         return *this;
     }
     
-    //decidere quale usare
+    //decidere quale usare    void eliminaArticolo(Articolo* art);
+
     Nodo& cerca(const T* t){//prima tornava un bool
         Nodo* attuale=first;
         while(attuale!=nullptr){

@@ -12,10 +12,9 @@ private:
   string titolo;
   string descrizione;
   int disponibilita;
-  int annoPubblicazione;
 public:
   //costruttori
-  Articolo(string tit = "Titolo non definito", string des="Descrizione non definita", int dis=0, int annopub=0);
+  Articolo(string tit = "Titolo non definito", string des="Descrizione non definita", int dis=0);
   Articolo(const Articolo& a);
   virtual ~Articolo();
 
@@ -25,7 +24,6 @@ public:
   virtual string getTitolo() const;
   virtual string getDescrizione() const;
   virtual int getDisponibilita() const;
-  virtual int getAnnoPubblicazione() const;
   //extra
   virtual string getAutore() const;
   virtual string getEditore() const;
@@ -45,7 +43,6 @@ public:
   virtual void setTitolo(const string& newTitolo);
   virtual void setDescrizione(const string& newDescrizione);
   virtual void setDisponibilita(int newDisponibilita);
-  virtual void setAnnoPubblicazione(int newAnnoPubblicazione);
   //extra
   virtual void setAutore(const string& newAutore);
   virtual void setEditore(const string& newEditore);
@@ -63,7 +60,7 @@ public:
 
   //metodi
   //aggiunger modifica dettagli, ha argomenti di default, vedere se cambiare
-  virtual void modificaDettagli(const string& newTitolo="", const string& newDescrizione="", int newDisponibilita=0, int newAnnoPubblicazione=0, 
+  virtual void modificaDettagli(const string& newTitolo="", const string& newDescrizione="", int newDisponibilita=0, 
     const string& newAutore="", const string& newEditore="", int newPagine=0, const string& newGenereRomanzo="", int newNumero=0, const string& newArgomento="", 
     int newDurata=0, const string& newRegista="", double newVoto=0, const string& newArtista="", const string& newGenereCD="", int newNumeroBrani=0);
   virtual void modifica2();//opzione alternativa che usa dei cin

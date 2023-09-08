@@ -33,4 +33,3 @@ FinestraAggiungiArticolo::FinestraAggiungiArticolo(QWidget* parent) : QDialog(pa
     setWindowTitle("Modifica Articolo");
 }
 
-FinestraAggiungiArticolo::~FinestraAggiungiArticolo() = default;

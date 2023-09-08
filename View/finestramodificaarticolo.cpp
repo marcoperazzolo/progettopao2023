@@ -1,54 +1,55 @@
 #include "finestramodificaarticolo.h"
 
 
-FinestraModificaArticolo::FinestraModificaArticolo(WidgetArticolo* articolo, QWidget* parent) : QDialog(parent), widgetArticolo(articolo) {    
-    QVBoxLayout* layout = new QVBoxLayout(this);
+FinestraModificaArticolo::FinestraModificaArticolo(Articolo* art, QWidget* parent) : QDialog(parent), articolo(art) {
+        QVBoxLayout* layout = new QVBoxLayout(this);
 
-        //CAMPI EDITABILI : lettura dal WidgetArticolo
-        titoloLineEdit = new QLineEdit(QString((widgetArticolo->getTitoloLabel())->text()), this);
-        descrizioneTextEdit = new QTextEdit(QString((widgetArticolo->getDescrizioneLabel())->text()), this);
-        disponibilitaLineEdit = new QLineEdit(QString((widgetArticolo->getDisponibilitaLabel())->text()), this);
+        //CAMPI EDITABILI : lettura da Articolo
+        titoloLineEdit = new QLineEdit(QString::fromStdString(articolo->getTitolo()), this);
+        descrizioneTextEdit = new QTextEdit(QString::fromStdString(articolo->getDescrizione()), this);
+        disponibilitaLineEdit = new QLineEdit(QString::number(articolo->getDisponibilita()), this);
         layout->addWidget(titoloLineEdit);
         layout->addWidget(descrizioneTextEdit);
         layout->addWidget(disponibilitaLineEdit);
 
-        if(dynamic_cast<Disco*>(widgetArticolo->getArticolo())){
-            durataLineEdit = new QLineEdit(QString((widgetArticolo->getDurataLabel())->text()), this);
+        //CAMPI EDITABILI : lettura in base al TD di articolo
+        if(dynamic_cast<Disco*>(articolo)){
+            durataLineEdit = new QLineEdit(QString::number(articolo->getDurata()), this);
             layout->addWidget(durataLineEdit);
 
-            if(dynamic_cast<CD*>(widgetArticolo->getArticolo())){
-                artistaLineEdit = new QLineEdit(QString((widgetArticolo->getArtistaLabel())->text()), this);
-                genereMusicaleLineEdit = new QLineEdit(QString((widgetArticolo->getGenereMusicaleLabel())->text()), this);
-                numBraniLineEdit = new QLineEdit(QString((widgetArticolo->getNumbraniLabel())->text()), this);
+            if(dynamic_cast<CD*>(articolo)){
+                artistaLineEdit = new QLineEdit(QString::fromStdString(articolo->getArtista()), this);
+                genereMusicaleLineEdit = new QLineEdit(QString::fromStdString(articolo->getGenereCD()), this);
+                numBraniLineEdit = new QLineEdit(QString::number(articolo->getNumeroBrani()), this);
                 layout->addWidget(artistaLineEdit);
                 layout->addWidget(genereMusicaleLineEdit);
                 layout->addWidget(numBraniLineEdit);
             }
-            if(dynamic_cast<DVD*>(widgetArticolo->getArticolo())){
-                registaLineEdit = new QLineEdit(QString((widgetArticolo->getRegistaLabel())->text()), this);
-                votoLineEdit = new QLineEdit(QString((widgetArticolo->getVotoLabel())->text()), this);
+            if(dynamic_cast<DVD*>(articolo)){
+                registaLineEdit = new QLineEdit(QString::fromStdString(articolo->getRegista()), this);
+                votoLineEdit = new QLineEdit(QString::number(articolo->getVoto()), this);
                 layout->addWidget(registaLineEdit);
                 layout->addWidget(votoLineEdit);
             }
         }
-        if(dynamic_cast<Libro*>(widgetArticolo->getArticolo())){
-            autoreLineEdit = new QLineEdit(QString((widgetArticolo->getAutoreLabel())->text()), this);
-            editoreLineEdit = new QLineEdit(QString((widgetArticolo->getEditoreLabel())->text()), this);
-            numPagineLineEdit = new QLineEdit(QString((widgetArticolo->getPagineLabel())->text()), this);
+        if(dynamic_cast<Libro*>(articolo)){
+            autoreLineEdit = new QLineEdit(QString::fromStdString(articolo->getAutore()), this);
+            editoreLineEdit = new QLineEdit(QString::fromStdString(articolo->getEditore()), this);
+            numPagineLineEdit = new QLineEdit(QString::number(articolo->getPagine()), this);
             layout->addWidget(autoreLineEdit);
             layout->addWidget(editoreLineEdit);
             layout->addWidget(numPagineLineEdit);
 
-            if(dynamic_cast<Romanzo*>(widgetArticolo->getArticolo())){
-                genereLineEdit = new QLineEdit(QString((widgetArticolo->getGenereLabel())->text()), this);
+            if(dynamic_cast<Romanzo*>(articolo)){
+                genereLineEdit = new QLineEdit(QString::fromStdString(articolo->getGenereRomanzo()), this);
                 layout->addWidget(genereLineEdit);
             }
-            if(dynamic_cast<Manuale*>(widgetArticolo->getArticolo())){
-                argomentoLineEdit = new QLineEdit(QString((widgetArticolo->getArgomentoLabel())->text()), this);
+            if(dynamic_cast<Manuale*>(articolo)){
+                argomentoLineEdit = new QLineEdit(QString::fromStdString(articolo->getArgomento()), this);
                 layout->addWidget(argomentoLineEdit);
             }
-            if(dynamic_cast<Fumetto*>(widgetArticolo->getArticolo())){
-                numFumettoLineEdit = new QLineEdit(QString((widgetArticolo->getNumeroLabel())->text()), this);
+            if(dynamic_cast<Fumetto*>(articolo)){
+                numFumettoLineEdit = new QLineEdit(QString::number(articolo->getNumero()), this);
                 layout->addWidget(numFumettoLineEdit);
             }
         }
@@ -70,122 +71,122 @@ FinestraModificaArticolo::FinestraModificaArticolo(WidgetArticolo* articolo, QWi
         connect(annullaButton, &QPushButton::clicked, this, &FinestraModificaArticolo::reject);
         connect(eliminaButton, &QPushButton::clicked, this, &FinestraModificaArticolo::eliminaArticolo);
 
+        //Imposta il layout
         setLayout(layout);
         setWindowTitle("Modifica Articolo");
 }
 
 
-
-
-FinestraModificaArticolo::~FinestraModificaArticolo() = default;
-
-//getter tipo QString
-QString FinestraModificaArticolo::getTitolo() const {
-    return titoloLineEdit->text();
-}
-QString FinestraModificaArticolo::getDisponibilita() const {
-    return disponibilitaLineEdit->text();
-}
-
-QString FinestraModificaArticolo::getDescrizione() const {
-    return descrizioneTextEdit->toPlainText();
-}
-
-//Aggiorna Wi
 void FinestraModificaArticolo::confermaModifiche() {
 
-    //Aggiorna Titolo, Desc Labels del Widget
-    widgetArticolo->setTitolo((QString(titoloLineEdit->text())).toStdString());
-    widgetArticolo->setDescrizione((QString(descrizioneTextEdit->toPlainText())).toStdString());
-
-    //Aggiorna l'articolo
-    widgetArticolo->getArticolo()->setTitolo((QString(titoloLineEdit->text())).toStdString());
-    widgetArticolo->getArticolo()->setDescrizione((QString(descrizioneTextEdit->toPlainText())).toStdString());
-
-    //controllo string->int, setta Disponibilità ad Articolo e Widget
-    if(std::stoi(((QString(disponibilitaLineEdit->text())).toStdString()))){
-        widgetArticolo->getArticolo()->setDisponibilita(std::stoi(((QString(disponibilitaLineEdit->text())).toStdString())));
-        widgetArticolo->setDisponibilita(std::stoi(((QString(disponibilitaLineEdit->text())).toStdString())));
+    //Aggiorna Titolo, Desc, Labels del Widget
+    string newTitolo = (QString(titoloLineEdit->text())).toStdString();
+    string newDescrizione = (QString(descrizioneTextEdit->toPlainText())).toStdString();
+    articolo->setTitolo(newTitolo);
+    articolo->setDescrizione(newDescrizione);
+    if(int newDisponibilita = std::stoi(((QString(disponibilitaLineEdit->text())).toStdString()))){
+        articolo->setDisponibilita(newDisponibilita);
     } else {
-        widgetArticolo->getArticolo()->setDisponibilita(-1);
-        widgetArticolo->setDisponibilita(-1);
+        articolo->setDisponibilita(-1);
     }
 
-    //in base al tipo setta campi (Articolo) e labels (WidgetArticolo)
-    if(Disco* disco = dynamic_cast<Disco*>(widgetArticolo->getArticolo())){
-        //Durata
-        if(std::stoi(((QString(durataLineEdit->text())).toStdString()))){
-            disco->setDurata(std::stoi(((QString(durataLineEdit->text())).toStdString())));
-            widgetArticolo->setDurata(std::stoi(((QString(durataLineEdit->text())).toStdString())));
-        } else {
-            widgetArticolo->getArticolo()->setDisponibilita(-1);
-            widgetArticolo->setDisponibilita(-1);
+    //In base al tipo setta campi (Articolo)
+        //DISCO
+        if(Disco* disco = dynamic_cast<Disco*>(articolo)){
+            //Durata
+            if(int newDurata = std::stoi(((QString(durataLineEdit->text())).toStdString()))){
+                disco->setDurata(newDurata);
+            } else {
+                disco->setDurata(-1);
+            }
+
+            //CD
+            if(CD* cd =dynamic_cast<CD*>(articolo)){
+                //Artista
+                string newArtista = (QString(artistaLineEdit->text())).toStdString();
+                cd->setArtista(newArtista);
+
+                //Genere
+                string newGenere = (QString(genereMusicaleLineEdit->text())).toStdString();
+                cd->setGenereCD(newGenere);
+
+                //Numero Brani
+                if(int newNumBrani = std::stoi(((QString(numBraniLineEdit->text())).toStdString()))){
+                    cd->setNumeroBrani(newNumBrani);
+                } else {
+                    cd->setDisponibilita(-1);
+                }
+            }
+
+            //DVD
+            if(DVD* dvd = dynamic_cast<DVD*>(articolo)){
+                //Regista
+                string newRegista = (QString(registaLineEdit->text())).toStdString();
+                dvd->setRegista(newRegista);
+
+                //Voto
+                if(double newVoto = std::stod(((QString(votoLineEdit->text())).toStdString()))){
+                    dvd->setVoto(newVoto);
+                } else {
+                    dvd->setVoto(-1.0);
+                }
+            }
+        }
+        //LIBRO
+        if(Libro* libro = dynamic_cast<Libro*>(articolo)){
+            //Autore
+            string newAutore = (QString(autoreLineEdit->text())).toStdString();
+            libro->setAutore(newAutore);
+
+            //Pagine
+            if(int newNumPagine = std::stoi(((QString(numPagineLineEdit->text())).toStdString()))){
+                libro->setPagine(newNumPagine);
+            } else {
+                libro->setPagine(-1);
+            }
+
+            //Editore
+            string newEditore = (QString(editoreLineEdit->text())).toStdString();
+            libro->setEditore(newEditore);
+
+            //ROMANZO
+            if(Romanzo* romanzo = dynamic_cast<Romanzo*>(articolo)){
+
+                //Genere
+                string newGenere = (QString(genereLineEdit->text())).toStdString();
+                romanzo->setGenereRomanzo(newGenere);
+            }
+
+            //MANUALE
+            if(Manuale* manuale = dynamic_cast<Manuale*>(articolo)){
+
+                //Argomento
+                string newArgomento = (QString(argomentoLineEdit->text())).toStdString();
+                manuale->setArgomento(newArgomento);
+            }
+
+            //FUMETTO
+            if(Fumetto* fumetto = dynamic_cast<Fumetto*>(articolo)){
+
+                //Numero Fumetto
+                if(int newNumeroFumetto = std::stoi(((QString(numFumettoLineEdit->text())).toStdString()))){
+                    fumetto->setNumero(newNumeroFumetto);
+                } else {
+                    fumetto->setNumero(-1);
+                }
+            }
         }
 
-        if(CD* cd =dynamic_cast<CD*>(widgetArticolo->getArticolo())){
-            cd->setArtista((QString(artistaLineEdit->text())).toStdString());
-            widgetArticolo->setArtista(QString(artistaLineEdit->text()).toStdString());
-            cd->setGenere((QString(genereMusicaleLineEdit->text())).toStdString());
-            widgetArticolo->setGenereMusicale(QString(genereMusicaleLineEdit->text()).toStdString());
-            if(std::stoi(((QString(numBraniLineEdit->text())).toStdString()))){
-                cd->setNumeroBrani(std::stoi(((QString(numBraniLineEdit->text())).toStdString())));
-                widgetArticolo->setNumeroBrani(std::stoi(((QString(numBraniLineEdit->text())).toStdString())));
-            } else {
-                cd->setDisponibilita(0);
-                widgetArticolo->setDisponibilita(0);
-            }
-        }
-        if(DVD* dvd = dynamic_cast<DVD*>(widgetArticolo->getArticolo())){
-            dvd->setRegista((QString(registaLineEdit->text())).toStdString());
-            widgetArticolo->setRegista(QString(registaLineEdit->text()).toStdString());
-            if(std::stod(((QString(votoLineEdit->text())).toStdString()))){
-                dvd->setVoto(std::stoi(((QString(votoLineEdit->text())).toStdString())));
-                widgetArticolo->setVoto(std::stoi(((QString(votoLineEdit->text())).toStdString())));
-            } else {
-                dvd->setVoto(0.0);
-                widgetArticolo->setVoto(0.0);
-            }
-        }
-    }
-    if(Libro* libro = dynamic_cast<Libro*>(widgetArticolo->getArticolo())){
-        libro->setAutore((QString(autoreLineEdit->text())).toStdString());
-        widgetArticolo->setAutore(QString(autoreLineEdit->text()).toStdString());
-        if(std::stoi(((QString(numPagineLineEdit->text())).toStdString()))){
-            libro->setPagine(std::stoi(((QString(numPagineLineEdit->text())).toStdString())));
-            widgetArticolo->setPagine(std::stoi(((QString(numPagineLineEdit->text())).toStdString())));
-        } else {
-            libro->setPagine(0);
-            widgetArticolo->setPagine(0);
-        }
-        libro->setEditore((QString(editoreLineEdit->text())).toStdString());
-        widgetArticolo->setEditore(QString(editoreLineEdit->text()).toStdString());
 
-        if(Romanzo* romanzo = dynamic_cast<Romanzo*>(widgetArticolo->getArticolo())){
-            romanzo->setGenere((QString(genereLineEdit->text())).toStdString());
-            widgetArticolo->setGenere(QString(genereLineEdit->text()).toStdString());
-        }
-        if(Manuale* manuale = dynamic_cast<Manuale*>(widgetArticolo->getArticolo())){
-            manuale->setArgomento((QString(argomentoLineEdit->text())).toStdString());
-            widgetArticolo->setArgomento(QString(argomentoLineEdit->text()).toStdString());
-        }
-        if(Fumetto* fumetto = dynamic_cast<Fumetto*>(widgetArticolo->getArticolo())){
-            if(std::stoi(((QString(numFumettoLineEdit->text())).toStdString()))){
-                fumetto->setNumero(std::stoi(((QString(numFumettoLineEdit->text())).toStdString())));
-                widgetArticolo->setNumFumetto(std::stoi(((QString(numFumettoLineEdit->text())).toStdString())));
-            } else {
-                fumetto->setNumero(0);
-                widgetArticolo->setNumFumetto(0);
-            }
-        }
-    }
-    // Chiudi la finestra di modifica
-    //refresh del widget
-    //widgetArticolo->refresh();, non serve a quanto pare
-    accept();
+    //REFRESH
+    //da chiamare refresh del dettaglio e della lista (art*)
+    emit modificheConfermate();
+
+    //accept();
+    close();
 }
 
 void FinestraModificaArticolo::eliminaArticolo() {
-    widgetArticolo->getArticolo()->~Articolo();
-    delete widgetArticolo;
-
+    emit eliminaArticoloCommand(articolo);
+    close(); //Credo??
 }

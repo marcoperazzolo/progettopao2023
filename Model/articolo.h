@@ -30,6 +30,7 @@ public:
   virtual string getDescrizione() const;
   virtual int getDisponibilita() const;
   //extra
+
   virtual string getAutore() const;
   virtual string getEditore() const;
   virtual int getPagine() const;
@@ -64,12 +65,8 @@ public:
   virtual void setNumeroBrani(int newNumeroBrani);
 
   //metodi
-  //aggiunger modifica dettagli, ha argomenti di default, vedere se cambiare
-  virtual void modificaDettagli(const string& newTitolo="", const string& newDescrizione="", int newDisponibilita=0, 
-    const string& newAutore="", const string& newEditore="", int newPagine=0, const string& newGenereRomanzo="", int newNumero=0, const string& newArgomento="", 
-    int newDurata=0, const string& newRegista="", double newVoto=0, const string& newArtista="", const string& newGenereCD="", int newNumeroBrani=0);
-  virtual void modifica2();//opzione alternativa che usa dei cin
-  virtual void mostraDettagli() const;
+
+  virtual void modifica2();
 
   virtual QJsonObject toJson() const = 0;
   virtual void fromJson(const QJsonObject& jsonObj) = 0;

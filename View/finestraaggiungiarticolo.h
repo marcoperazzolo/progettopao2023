@@ -73,7 +73,7 @@ public:
     FinestraAggiungiArticolo(QWidget* parent = nullptr);
      ~FinestraAggiungiArticolo() = default;
 public slots:
-    void tipoArticoloCambiato(int index);
+    void tipoArticoloCambiato();
 
     void confermaAggiuntaCD();
     void confermaAggiuntaDVD();

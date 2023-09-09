@@ -57,25 +57,6 @@ void Articolo::setArtista(const string& newArtista){}
 void Articolo::setGenereCD(const string& newGenere){}
 void Articolo::setNumeroBrani(int newNumeroBrani){}
 
-void Articolo::modificaDettagli(const string& newTitolo, const string& newDescrizione, int newDisponibilita, 
-  const string& newAutore, const string& newEditore, int newPagine, const string& newGenereRomanzo, int newNumero, const string& newArgomento, 
-  int newDurata, const string& newRegista, double newVoto, const string& newArtista, const string& newGenereCD, int newNumeroBrani){
-    setTitolo(newTitolo);
-    setDescrizione(newDescrizione);
-    setDisponibilita(newDisponibilita);
-    /*setAutore(newAutore);
-    setEditore(newEditore);
-    setPagine(newPagine);
-    setGenereRomanzo(newGenereRomanzo);
-    setNumero(newNumero);
-    setArgomento(newArgomento);
-    setDurata(newDurata);
-    setRegista(newRegista);
-    setVoto(newVoto);
-    setArtista(newArtista);
-    setGenereCD(newGenereCD);
-    setNumeroBrani(newNumeroBrani);*/
-}
 void Articolo::modifica2(){
   string newTitolo;
   string newDescrizione;
@@ -87,18 +68,5 @@ void Articolo::modifica2(){
   setDescrizione(newDescrizione);
   setDisponibilita(newDisponibilita);
 }
-void Articolo::mostraDettagli() const{
-  std::cout<<"Titolo: "<<getTitolo()<<", Descrizione: "<<getDescrizione()<<", Disponibilita': "<<getDisponibilita()<<std::endl;
-}
 
-/*Articolo* Articolo::fromJson(const QJsonObject& jsonObj) {
 
-}
-
-QJsonObject Articolo::toJson() const {
-    QJsonObject jsonObj;
-    jsonObj["titolo"] = QString::fromStdString(titolo);
-    jsonObj["descrizione"] = QString::fromStdString(descrizione);
-    jsonObj["disponibilita"] = disponibilita;
-    return jsonObj;
-}*/

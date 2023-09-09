@@ -82,9 +82,7 @@ public:
         return *this;
     }
     
-    //decidere quale usare    void eliminaArticolo(Articolo* art);
-
-    Nodo& cerca(const T* t){//prima tornava un bool
+    Nodo& cerca(const T* t){
         Nodo* attuale=first;
         while(attuale!=nullptr){
             if(attuale->getInfo()==t){
@@ -95,7 +93,7 @@ public:
         return *attuale;
     }
 
-    bool cercaBool(const T* t){//prima tornava un bool
+    bool cercaBool(const T* t){
         Nodo* attuale=first;
         while(attuale!=nullptr){
             if(attuale->getInfo()==t){
@@ -106,7 +104,7 @@ public:
         return false;
     }
 
-    T* cercadaPos(unsigned int pos){//prima tornava un bool
+    T* cercadaPos(unsigned int pos){
         Nodo* attuale=first;
         unsigned int count = 0;
         while(attuale!=nullptr){
@@ -142,30 +140,6 @@ public:
         return nullptr;
     }
     
-    /*Lista& rimuoviCoda(){
-        Nodo* attuale=first;
-        Nodo* precedente=nullptr;
-        while(attuale->getNext()!=nullptr){
-            precedente=attuale;
-            attuale=attuale->getNext();
-        }
-        delete attuale;
-        precedente->setNext(nullptr);
-        return *this;
-    }
-    Lista& spostaDaCodaATesta(){
-        Nodo* attuale=first;
-        Nodo* coda=nullptr;
-        unsigned int dim=getDim();
-        while(dim>1){
-            attuale=attuale->getNext();
-            dim--;
-            coda=attuale;
-        }
-        inserisci(attuale->getInfo());
-        rimuoviCoda();
-        return *this;
-    }*/
 
     Lista& copia(const Lista& l){
         if(this!=&l){
@@ -181,15 +155,14 @@ public:
         return *this;
     }
 
-    //inserire metodo per lettura
-    void lettura() const{//vedere come lo hanno fatto, da cambiare
+    void lettura() const{
         Nodo* attuale=first;
         while(attuale!=nullptr){
             attuale->getInfo()->mostraDettagli();
             attuale=attuale->getNext();
         }
     }
-    Nodo& lettura2(const T* t){//ritorna un nodo che deve essere usato per vedere l'elemento
+    Nodo& lettura2(const T* t){
         Nodo* attuale=first;
         while(attuale!=nullptr){
             if(attuale->getInfo()==t){
@@ -262,10 +235,6 @@ public:
                 QJsonObject jsonObject = jsonDoc.object();
                 QJsonArray jsonArray = jsonObject["lista"].toArray();
 
-                // Pulisci la lista corrente
-                //distruggi();
-
-                // Ricrea la lista dall'array JSON
                 for (const auto& jsonValue : jsonArray) {
                     QJsonObject jsonObj = jsonValue.toObject();
                     std::string tipo = (QString(jsonObj["tipo"].toString())).toStdString();

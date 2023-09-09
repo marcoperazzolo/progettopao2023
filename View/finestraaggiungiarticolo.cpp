@@ -149,7 +149,7 @@ FinestraAggiungiArticolo::FinestraAggiungiArticolo(QWidget* parent) : QDialog(pa
     setWindowTitle("Aggiungi Articolo");
 }
 
-void FinestraAggiungiArticolo::tipoArticoloCambiato(int index) {
+void FinestraAggiungiArticolo::tipoArticoloCambiato() {
     // Nascondi tutti i campi prima di mostrarne uno
     titoloLineEdit->hide();
     descrizioneLineEdit->hide();

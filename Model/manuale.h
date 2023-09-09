@@ -21,11 +21,8 @@ public:
     void setArgomento(const string& newArgomento);
 
     //metodi
-    virtual void modificaDettagli(const string& newTitolo="", const string& newDescrizione="", int newDisponibilita=0,
-        const string& newAutore="", const string& newEditore="", int newPagine=0, const string& newGenereRomanzo="", int newNumero=0, const string& newArgomento="", 
-        int newDurata=0, const string& newRegista="", double newVoto=0, const string& newArtista="", const string& newGenereCD="", int newNumeroBrani=0);
+
     virtual void modifica2();
-    virtual void mostraDettagli() const;
 
     QJsonObject toJson() const;
     void fromJson(const QJsonObject& jsonObj);

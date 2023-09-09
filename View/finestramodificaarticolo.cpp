@@ -84,7 +84,9 @@ void FinestraModificaArticolo::confermaModifiche() {
     string newDescrizione = (QString(descrizioneTextEdit->toPlainText())).toStdString();
     articolo->setTitolo(newTitolo);
     articolo->setDescrizione(newDescrizione);
-    if(int newDisponibilita = std::stoi(((QString(disponibilitaLineEdit->text())).toStdString()))){
+    bool ok;
+    int newDisponibilita = (QString(disponibilitaLineEdit->text())).toInt(&ok);
+    if(ok){
         articolo->setDisponibilita(newDisponibilita);
     } else {
         articolo->setDisponibilita(-1);
@@ -94,7 +96,8 @@ void FinestraModificaArticolo::confermaModifiche() {
         //DISCO
         if(Disco* disco = dynamic_cast<Disco*>(articolo)){
             //Durata
-            if(int newDurata = std::stoi(((QString(durataLineEdit->text())).toStdString()))){
+            int newDurata = (QString(durataLineEdit->text())).toInt(&ok);
+            if(ok){
                 disco->setDurata(newDurata);
             } else {
                 disco->setDurata(-1);
@@ -110,8 +113,9 @@ void FinestraModificaArticolo::confermaModifiche() {
                 string newGenere = (QString(genereMusicaleLineEdit->text())).toStdString();
                 cd->setGenereCD(newGenere);
 
+                int newNumBrani = (QString(numBraniLineEdit->text())).toInt(&ok);
                 //Numero Brani
-                if(int newNumBrani = std::stoi(((QString(numBraniLineEdit->text())).toStdString()))){
+                if(ok){
                     cd->setNumeroBrani(newNumBrani);
                 } else {
                     cd->setNumeroBrani(-1);
@@ -125,7 +129,8 @@ void FinestraModificaArticolo::confermaModifiche() {
                 dvd->setRegista(newRegista);
 
                 //Voto
-                if(double newVoto = std::stod(((QString(votoLineEdit->text())).toStdString()))){
+                int newVoto = (QString(votoLineEdit->text())).toInt(&ok);
+                if(ok){
                     dvd->setVoto(newVoto);
                 } else {
                     dvd->setVoto(-1.0);
@@ -139,10 +144,11 @@ void FinestraModificaArticolo::confermaModifiche() {
             std::string newAutore = (QString(autoreLineEdit->text())).toStdString();
             libro->setAutore(newAutore);
             //Pagine
-            if(int newNumPagine = std::stoi(((QString(numPagineLineEdit->text())).toStdString()))){
+            int newNumPagine = (QString(numPagineLineEdit->text())).toInt(&ok);
+            if(ok){
                 libro->setPagine(newNumPagine);
             } else {
-                libro->setPagine(0);
+                libro->setPagine(-1);
             }
 
             //Editore
@@ -168,7 +174,8 @@ void FinestraModificaArticolo::confermaModifiche() {
             if(Fumetto* fumetto = dynamic_cast<Fumetto*>(articolo)){
 
                 //Numero Fumetto
-                if(int newNumeroFumetto = std::stoi(((QString(numFumettoLineEdit->text())).toStdString()))){
+                int newNumeroFumetto = (QString(numFumettoLineEdit->text())).toInt(&ok);
+                if(ok){
                     fumetto->setNumero(newNumeroFumetto);
                 } else {
                     fumetto->setNumero(-1);

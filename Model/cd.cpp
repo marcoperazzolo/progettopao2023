@@ -25,25 +25,6 @@ void CD::setNumeroBrani(int newNumeroBrani){
     numBrani=newNumeroBrani;
 }
 
-void CD::modificaDettagli(const string& newTitolo, const string& newDescrizione, int newDisponibilita, 
-  const string& newAutore, const string& newEditore, int newPagine, const string& newGenereRomanzo, int newNumero, const string& newArgomento, 
-  int newDurata, const string& newRegista, double newVoto, const string& newArtista, const string& newGenereCD, int newNumeroBrani){
-    setTitolo(newTitolo);
-    setDescrizione(newDescrizione);
-    setDisponibilita(newDisponibilita);
-    /*setAutore(newAutore);
-    setEditore(newEditore);
-    setPagine(newPagine);
-    setGenereRomanzo(newGenereRomanzo);
-    setNumero(newNumero);
-    setArgomento(newArgomento);*/
-    setDurata(newDurata);
-    /*setRegista(newRegista);
-    setVoto(newVoto);*/
-    setArtista(newArtista);
-    setGenereCD(newGenereCD);
-    setNumeroBrani(newNumeroBrani);
-}
 
 void CD::modifica2(){
   string newTitolo;
@@ -69,10 +50,6 @@ void CD::modifica2(){
   setNumeroBrani(newNumeroBrani);
 }
 
-void CD::mostraDettagli() const{
-  std::cout<<"Titolo: "<<getTitolo()<<", Descrizione: "<<getDescrizione()<<", Disponibilita': "<<getDisponibilita()
-  <<", Durata: "<<getDurata()<<", Artista: "<<getArtista()<<", Genere: "<<getGenereCD()<<", Numero brani: "<<getNumeroBrani()<<std::endl;
-}
 
 QJsonObject CD::toJson() const {
     QJsonObject jsonObj;

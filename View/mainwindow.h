@@ -31,7 +31,7 @@ class MainWindow : public QMainWindow {
 private:
     ListaArticoli* listaarticoli;
     FinestraDettagliArticolo* finestradettarticolo;
-    FinestraAggiungiArticolo* finestraaggiunta;
+    //FinestraAggiungiArticolo* finestraaggiunta;
 
     WidgetArticolo* widgetItem;
     WidgetArticolo* wasource;

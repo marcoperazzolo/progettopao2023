@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     //barraRicerca->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Rimuovi la barra di scorrimento orizzontale
     barraRicerca->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Rimuovi la barra di scorrimento verticale
     //barraRicerca->setStyleSheet("QTextEdit { padding: 1px 0; }"); // Imposta il padding per evitare i movimenti leggeri durante la scrittura
+    //barraRicerca->setWordWrapMode(QTextOption::NoWrap);
 
     cercaButton = new QPushButton("Cerca", centralWidget);
     aggiungiArticoloButton = new QPushButton("Aggiungi Articolo", centralWidget);
@@ -84,10 +85,9 @@ void MainWindow::refresh(){
 }
 
 void MainWindow::apriFinestraAggiunta(){
-    finestraaggiunta = new FinestraAggiungiArticolo(this);
-    connect(finestraaggiunta, SIGNAL(segnaleNuovoArticolo(Articolo*)), this, SLOT(aggiungiArticolo(Articolo*)));
-
-    finestraaggiunta->exec();
+    FinestraAggiungiArticolo finestraaggiunta(this);
+    connect(&finestraaggiunta, SIGNAL(segnaleNuovoArticolo(Articolo*)), this, SLOT(aggiungiArticolo(Articolo*)));
+    finestraaggiunta.exec();
 }
 
 void MainWindow::aggiungiArticolo(Articolo* art){
@@ -106,30 +106,32 @@ void MainWindow::cercaButtonPremuto(){
     }
     else{
         if(listaarticoli->getLista()->cercadaTitolo(titolocercato)){
-            listarisultati = new ListaArticoli(this);
-            listarisultati->aggiungiArticolo(listaarticoli->getLista()->cercadaTitolo(titolocercato));
-            listaarticoli->hide();
-            mainLayout->addWidget(listarisultati);
-            connect(listarisultati, &ListaArticoli::itemDoubleClicked, this, &MainWindow::mostraDettagliArticolo);
-            listarisultati->show();
-            update();
+            if(listarisultati){
+                listarisultati->aggiungiArticolo(listaarticoli->getLista()->cercadaTitolo(titolocercato));
+                listaarticoli->hide();
+                listarisultati->show();
+                update();
+            }else{
+                listarisultati = new ListaArticoli(this);
+                listarisultati->aggiungiArticolo(listaarticoli->getLista()->cercadaTitolo(titolocercato));
+                listaarticoli->hide();
+                mainLayout->addWidget(listarisultati);
+                connect(listarisultati, &ListaArticoli::itemDoubleClicked, this, &MainWindow::mostraDettagliArticolo);
+                listarisultati->show();
+                update();
+            }
         }else{
-            listarisultati = new ListaArticoli(this);
-            listaarticoli->hide();
-            mainLayout->addWidget(listarisultati);
-            listarisultati->show();
-            update();
+            if(listarisultati){
+                listaarticoli->hide();
+                listarisultati->show();
+                update();
+            }else{
+                listarisultati = new ListaArticoli(this);
+                listaarticoli->hide();
+                mainLayout->addWidget(listarisultati);
+                listarisultati->show();
+                update();
+            }
         }
     }
 }
-
-/*void MainWindow::mostraNuovaLista(ListaArticoli* newvista){
-    nuovavista = newvista;
-    listaarticoli->hide();
-    mainLayout->addWidget(nuovavista);
-}
-
-void MainWindow::ripristinaVista(){
-    nuovavista->close();
-    listaarticoli->show();
-}*/

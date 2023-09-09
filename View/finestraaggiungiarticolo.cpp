@@ -114,22 +114,45 @@ FinestraAggiungiArticolo::FinestraAggiungiArticolo(QWidget* parent) : QDialog(pa
     numFumettoLabel->hide();
 
     //BUTTONS
-    confermaButton = new QPushButton("Conferma", this);
+    confermaCDButton = new QPushButton("Conferma", this);
+    confermaDVDButton = new QPushButton("Conferma", this);
+    confermaManualeButton = new QPushButton("Conferma", this);
+    confermaRomanzoButton = new QPushButton("Conferma", this);
+    confermaFumettoButton = new QPushButton("Conferma", this);
+    //confermaButton = new QPushButton("Conferma", this);
     annullaButton = new QPushButton("Annulla", this);
     QHBoxLayout* buttonLayout = new QHBoxLayout;
-    buttonLayout->addWidget(confermaButton);
+    //buttonLayout->addWidget(confermaButton);
+    buttonLayout->addWidget(confermaCDButton);
+    buttonLayout->addWidget(confermaDVDButton);
+    buttonLayout->addWidget(confermaManualeButton);
+    buttonLayout->addWidget(confermaRomanzoButton);
+    buttonLayout->addWidget(confermaFumettoButton);
+    confermaCDButton->hide();
+    confermaDVDButton->hide();
+    confermaManualeButton->hide();
+    confermaRomanzoButton->hide();
+    confermaFumettoButton->hide();
+
     buttonLayout->addWidget(annullaButton);
     layout->addLayout(buttonLayout);
 
     //CONNECT
     //connect(confermaButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::reject);
     connect(annullaButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::reject);
+    connect(confermaCDButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::confermaAggiuntaCD);
+    connect(confermaDVDButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::confermaAggiuntaDVD);
+    connect(confermaManualeButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::confermaAggiuntaManuale);
+    connect(confermaFumettoButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::confermaAggiuntaFumetto);
+    connect(confermaRomanzoButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::confermaAggiuntaRomanzo);
+
+
 
     setLayout(layout);
     setWindowTitle("Aggiungi Articolo");
 }
 
-void FinestraAggiungiArticolo::tipoArticoloCambiato() {
+void FinestraAggiungiArticolo::tipoArticoloCambiato(int index) {
     // Nascondi tutti i campi prima di mostrarne uno
     titoloLineEdit->hide();
     descrizioneLineEdit->hide();
@@ -146,7 +169,6 @@ void FinestraAggiungiArticolo::tipoArticoloCambiato() {
     genereLineEdit->hide();
     argomentoLineEdit->hide();
     numFumettoLineEdit->hide();
-
     titoloLabel->hide();
     descrizioneLabel->hide();
     disponibilitaLabel->hide();
@@ -163,8 +185,51 @@ void FinestraAggiungiArticolo::tipoArticoloCambiato() {
     argomentoLabel->hide();
     numFumettoLabel->hide();
 
+    confermaCDButton->hide();
+    confermaDVDButton->hide();
+    confermaManualeButton->hide();
+    confermaRomanzoButton->hide();
+    confermaFumettoButton->hide();
     tipoArticolo = tipoArticoloComboBox->currentText();
 
+    if (tipoArticolo == "Seleziona...") {
+        titoloLineEdit->hide();
+        descrizioneLineEdit->hide();
+        disponibilitaLineEdit->hide();
+        durataLineEdit->hide();
+        registaLineEdit->hide();
+        votoLineEdit->hide();
+        artistaLineEdit->hide();
+        genereMusicaleLineEdit->hide();
+        numBraniLineEdit->hide();
+        autoreLineEdit->hide();
+        editoreLineEdit->hide();
+        numPagineLineEdit->hide();
+        genereLineEdit->hide();
+        argomentoLineEdit->hide();
+        numFumettoLineEdit->hide();
+        titoloLabel->hide();
+        descrizioneLabel->hide();
+        disponibilitaLabel->hide();
+        durataLabel->hide();
+        registaLabel->hide();
+        votoLabel->hide();
+        artistaLabel->hide();
+        genereMusicaleLabel->hide();
+        numBraniLabel->hide();
+        autoreLabel->hide();
+        editoreLabel->hide();
+        numPagineLabel->hide();
+        genereLabel->hide();
+        argomentoLabel->hide();
+        numFumettoLabel->hide();
+
+        confermaCDButton->hide();
+        confermaDVDButton->hide();
+        confermaManualeButton->hide();
+        confermaRomanzoButton->hide();
+        confermaFumettoButton->hide();
+    }
     if (tipoArticolo == "CD") {
         titoloLabel->show();
         titoloLineEdit->show();
@@ -180,8 +245,8 @@ void FinestraAggiungiArticolo::tipoArticoloCambiato() {
         genereMusicaleLineEdit->show();
         numBraniLabel->show();
         numBraniLineEdit->show();
-        connect(confermaButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::confermaAggiuntaCD);
-    }
+        confermaCDButton->show();
+}
     if (tipoArticolo == "DVD") {
         titoloLabel->show();
         titoloLineEdit->show();
@@ -195,7 +260,7 @@ void FinestraAggiungiArticolo::tipoArticoloCambiato() {
         registaLineEdit->show();
         votoLabel->show();
         votoLineEdit->show();
-        connect(confermaButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::confermaAggiuntaDVD);
+        confermaDVDButton->show();
     }
     if (tipoArticolo == "Romanzo") {
         titoloLabel->show();
@@ -212,7 +277,7 @@ void FinestraAggiungiArticolo::tipoArticoloCambiato() {
         editoreLineEdit->show();
         genereLabel->show();
         genereLineEdit->show();
-        connect(confermaButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::confermaAggiuntaRomanzo);
+        confermaRomanzoButton->show();
     }
     if (tipoArticolo == "Fumetto") {
         titoloLineEdit->show();
@@ -229,7 +294,7 @@ void FinestraAggiungiArticolo::tipoArticoloCambiato() {
         numPagineLineEdit->show();
         numFumettoLabel->show();
         numFumettoLineEdit->show();
-        connect(confermaButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::confermaAggiuntaFumetto);
+        confermaFumettoButton->show();
     }
     if (tipoArticolo == "Manuale") {
         titoloLineEdit->show();
@@ -246,7 +311,7 @@ void FinestraAggiungiArticolo::tipoArticoloCambiato() {
         numPagineLineEdit->show();
         argomentoLabel->show();
         argomentoLineEdit->show();
-        connect(confermaButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::confermaAggiuntaManuale);
+        confermaManualeButton->show();
     }
 }
 
@@ -256,13 +321,18 @@ void FinestraAggiungiArticolo::confermaAggiuntaCD(){
     string newDescrizione = (QString(descrizioneLineEdit->text())).toStdString();
     cd->setTitolo(newTitolo);
     cd->setDescrizione(newDescrizione);
-    if(int newDisponibilita = std::stoi(((QString(disponibilitaLineEdit->text())).toStdString()))){
-        cd->setDisponibilita(newDisponibilita);
+    bool ok;
+    int dis = (QString(disponibilitaLineEdit->text())).toInt(&ok);
+    if(ok){
+        cd->setDisponibilita(dis);
     } else {
         cd->setDisponibilita(-1);
     }
-    if(int newDurata = std::stoi(((QString(durataLineEdit->text())).toStdString()))){
-        cd->setDurata(newDurata);
+    int dur = (QString(durataLineEdit->text())).toInt(&ok);
+    //if(std::stoi(((QString(durataLineEdit->text())).toStdString()))){
+    if(ok){
+        // newDurata = std::stoi(((QString(durataLineEdit->text())).toStdString()));
+        cd->setDurata(dur);
     } else {
         cd->setDurata(-1);
     }
@@ -270,8 +340,9 @@ void FinestraAggiungiArticolo::confermaAggiuntaCD(){
     cd->setArtista(newArtista);
     string newGenere = (QString(genereMusicaleLineEdit->text())).toStdString();
     cd->setGenereCD(newGenere);
-    if(int newNumBrani = std::stoi(((QString(numBraniLineEdit->text())).toStdString()))){
-        cd->setNumeroBrani(newNumBrani);
+    int brani = (QString(numBraniLineEdit->text())).toInt(&ok);
+    if(ok){
+        cd->setNumeroBrani(brani);
     } else {
         cd->setNumeroBrani(-1);
         }
@@ -286,19 +357,25 @@ void FinestraAggiungiArticolo::confermaAggiuntaDVD(){
     string newDescrizione = (QString(descrizioneLineEdit->text())).toStdString();
     dvd->setTitolo(newTitolo);
     dvd->setDescrizione(newDescrizione);
-    if(int newDisponibilita = std::stoi(((QString(disponibilitaLineEdit->text())).toStdString()))){
-        dvd->setDisponibilita(newDisponibilita);
+    bool ok;
+    int dis = (QString(disponibilitaLineEdit->text())).toInt(&ok);
+    if(ok){
+        dvd->setDisponibilita(dis);
     } else {
         dvd->setDisponibilita(-1);
     }
-    if(int newDurata = std::stoi(((QString(durataLineEdit->text())).toStdString()))){
-        dvd->setDurata(newDurata);
+    int dur = (QString(durataLineEdit->text())).toInt(&ok);
+    //if(std::stoi(((QString(durataLineEdit->text())).toStdString()))){
+    if(ok){
+        // newDurata = std::stoi(((QString(durataLineEdit->text())).toStdString()));
+        dvd->setDurata(dur);
     } else {
         dvd->setDurata(-1);
     }
     string newRegista = (QString(registaLineEdit->text())).toStdString();
     dvd->setRegista(newRegista);
-    if(double newVoto = std::stod(((QString(votoLineEdit->text())).toStdString()))){
+    int newVoto = (QString(votoLineEdit->text())).toInt(&ok);
+    if(ok){
         dvd->setVoto(newVoto);
     } else {
         dvd->setVoto(-1.0);
@@ -315,17 +392,20 @@ void FinestraAggiungiArticolo::confermaAggiuntaManuale(){
     string newDescrizione = (QString(descrizioneLineEdit->text())).toStdString();
     manuale->setTitolo(newTitolo);
     manuale->setDescrizione(newDescrizione);
-    if(int newDisponibilita = std::stoi(((QString(disponibilitaLineEdit->text())).toStdString()))){
-        manuale->setDisponibilita(newDisponibilita);
+    bool ok;
+    int dis = (QString(disponibilitaLineEdit->text())).toInt(&ok);
+    if(ok){
+        manuale->setDisponibilita(dis);
     } else {
         manuale->setDisponibilita(-1);
     }
     string newAutore = (QString(autoreLineEdit->text())).toStdString();
     manuale->setAutore(newAutore);
-    if(int newNumPagine = std::stoi(((QString(numPagineLineEdit->text())).toStdString()))){
+    int newNumPagine = (QString(numPagineLineEdit->text())).toInt(&ok);
+    if(ok){
         manuale->setPagine(newNumPagine);
     } else {
-        manuale->setPagine(0);
+        manuale->setPagine(-1);
     }
     std::string newEditore = (QString(editoreLineEdit->text())).toStdString();
     manuale->setEditore(newEditore);
@@ -342,17 +422,20 @@ void FinestraAggiungiArticolo::confermaAggiuntaRomanzo(){
     string newDescrizione = (QString(descrizioneLineEdit->text())).toStdString();
     romanzo->setTitolo(newTitolo);
     romanzo->setDescrizione(newDescrizione);
-    if(int newDisponibilita = std::stoi(((QString(disponibilitaLineEdit->text())).toStdString()))){
-        romanzo->setDisponibilita(newDisponibilita);
+    bool ok;
+    int dis = (QString(disponibilitaLineEdit->text())).toInt(&ok);
+    if(ok){
+        romanzo->setDisponibilita(dis);
     } else {
         romanzo->setDisponibilita(-1);
     }
     string newAutore = (QString(autoreLineEdit->text())).toStdString();
     romanzo->setAutore(newAutore);
-    if(int newNumPagine = std::stoi(((QString(numPagineLineEdit->text())).toStdString()))){
+    int newNumPagine = (QString(numPagineLineEdit->text())).toInt(&ok);
+    if(ok){
         romanzo->setPagine(newNumPagine);
     } else {
-        romanzo->setPagine(0);
+        romanzo->setPagine(-1);
     }
     string newEditore = (QString(editoreLineEdit->text())).toStdString();
     romanzo->setEditore(newEditore);
@@ -369,21 +452,25 @@ void FinestraAggiungiArticolo::confermaAggiuntaFumetto(){
     string newDescrizione = (QString(descrizioneLineEdit->text())).toStdString();
     fumetto->setTitolo(newTitolo);
     fumetto->setDescrizione(newDescrizione);
-    if(int newDisponibilita = std::stoi(((QString(disponibilitaLineEdit->text())).toStdString()))){
-        fumetto->setDisponibilita(newDisponibilita);
+    bool ok;
+    int dis = (QString(disponibilitaLineEdit->text())).toInt(&ok);
+    if(ok){
+        fumetto->setDisponibilita(dis);
     } else {
         fumetto->setDisponibilita(-1);
     }
     string newAutore = (QString(autoreLineEdit->text())).toStdString();
     fumetto->setAutore(newAutore);
-    if(int newNumPagine = std::stoi(((QString(numPagineLineEdit->text())).toStdString()))){
+    int newNumPagine = (QString(numPagineLineEdit->text())).toInt(&ok);
+    if(ok){
         fumetto->setPagine(newNumPagine);
     } else {
-        fumetto->setPagine(0);
+        fumetto->setPagine(-1);
     }
     std::string newEditore = (QString(editoreLineEdit->text())).toStdString();
     fumetto->setEditore(newEditore);
-    if(int newNumeroFumetto = std::stoi(((QString(numFumettoLineEdit->text())).toStdString()))){
+    int newNumeroFumetto =  (QString(disponibilitaLineEdit->text())).toInt(&ok);
+    if(ok){
         fumetto->setNumero(newNumeroFumetto);
     } else {
         fumetto->setNumero(-1);

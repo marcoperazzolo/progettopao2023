@@ -61,14 +61,21 @@ private:
     QComboBox* tipoArticoloComboBox;
     //BUTTONS
 
-    QPushButton* confermaButton;
+    //QPushButton* confermaButton;
+    QPushButton* confermaCDButton;
+    QPushButton* confermaDVDButton;
+    QPushButton* confermaManualeButton;
+    QPushButton* confermaRomanzoButton;
+    QPushButton* confermaFumettoButton;
+
+
     QPushButton* annullaButton;
 
 public:
     FinestraAggiungiArticolo(QWidget* parent = nullptr);
      ~FinestraAggiungiArticolo() = default;
 public slots:
-    void tipoArticoloCambiato();
+    void tipoArticoloCambiato(int index);
 
     void confermaAggiuntaCD();
     void confermaAggiuntaDVD();

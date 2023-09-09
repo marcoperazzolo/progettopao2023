@@ -107,17 +107,7 @@ void ListaArticoli::refreshLista() {
     update();
 }*/
 
-
 Lista<Articolo>* ListaArticoli::getLista() const{
     return model;
 }
 
-/*void ListaArticoli::cercaDaBarra(string titolo){
-    Lista<Articolo>* listarisultati = new Lista<Articolo>();
-    listarisultati->inserisci(model->cercadaTitolo(titolo));
-    if(titolo==""){
-        this->refreshLista(model);
-    }else{
-        this->refreshLista(listarisultati);
-    }
-}*/

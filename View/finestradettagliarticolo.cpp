@@ -32,19 +32,19 @@ FinestraDettagliArticolo::FinestraDettagliArticolo(Articolo* art, QWidget* paren
     //Immagine
     immagineLabel = new QLabel(this);
     if(dynamic_cast<CD*>(art)){
-        immagine = QPixmap(":img/dvd.png");
+        immagine = QPixmap(":/img/cd.png");
     }
     if(dynamic_cast<DVD*>(art)){
-        immagine = QPixmap(":img/dvd.png");
+        immagine = QPixmap(":/img/dvd.png");
     }
     if(dynamic_cast<Manuale*>(art)){
-        immagine = QPixmap(":img/dvd.png");
+        immagine = QPixmap(":/img/manuale.png");
     }
     if(dynamic_cast<Romanzo*>(art)){
-        immagine = QPixmap(":img/dvd.png");
+        immagine = QPixmap(":/img/romanzo.png");
     }
     if(dynamic_cast<Fumetto*>(art)){
-        immagine = QPixmap(":img/dvd.png");
+        immagine = QPixmap(":/img/fumetto.png");
     }
     immagine = immagine.scaled(100, 100, Qt::KeepAspectRatioByExpanding);
     immagineLabel->setPixmap(immagine);
@@ -146,33 +146,41 @@ void FinestraDettagliArticolo::refreshDettagli(){
     disponibilitaLabel->setText(QString::number(articolo->getDisponibilita()));
     if(dynamic_cast<Disco*>(articolo)){
         durataLabel->setText(QString::number(articolo->getDurata()));
-        immagine = QPixmap(":img/dvd.png");
 
         if(dynamic_cast<CD*>(articolo)){
             artistaLabel->setText(QString::fromStdString(articolo->getArtista()));
             genereMusicaleLabel->setText(QString::fromStdString(articolo->getGenereCD()));
             numbraniLabel->setText(QString::number(articolo->getNumeroBrani()));
+            immagine = QPixmap(":/img/cd.png");
+
 
         }
         if(dynamic_cast<DVD*>(articolo)){
             registaLabel->setText(QString::fromStdString(articolo->getRegista()));
             votoLabel->setText(QString::number(articolo->getVoto()));
+            immagine = QPixmap(":/img/dvd.png");
+
         }
     }
     if(dynamic_cast<Libro*>(articolo)){
         autoreLabel->setText(QString::fromStdString(articolo->getAutore()));
         pagineLabel->setText(QString::number(articolo->getPagine()));
         editoreLabel->setText(QString::fromStdString(articolo->getEditore()));
-        immagine = QPixmap(":img/dvd.png");
 
         if(dynamic_cast<Romanzo*>(articolo)){
             genereLabel->setText(QString::fromStdString(articolo->getGenereRomanzo()));
+            immagine = QPixmap(":/img/romanzo.png");
+
         }
         if(dynamic_cast<Manuale*>(articolo)){
             argomentoLabel->setText(QString::fromStdString(articolo->getArgomento()));
+            immagine = QPixmap(":/img/manuale.png");
+
         }
         if(dynamic_cast<Fumetto*>(articolo)){
             numeroLabel->setText(QString::number(articolo->getNumero()));
+            immagine = QPixmap(":/img/fumetto.png");
+
         }
     }
     immagine = immagine.scaled(100, 100, Qt::KeepAspectRatioByExpanding);

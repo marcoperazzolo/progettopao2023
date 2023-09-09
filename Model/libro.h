@@ -31,6 +31,8 @@ public:
         int newDurata=0, const string& newRegista="", double newVoto=0, const string& newArtista="", const string& newGenereCD="", int newNumeroBrani=0);
     virtual void modifica2();
     virtual void mostraDettagli() const;
+
+
 };
 
 #endif // LIBRO_H

@@ -73,3 +73,37 @@ void CD::mostraDettagli() const{
   std::cout<<"Titolo: "<<getTitolo()<<", Descrizione: "<<getDescrizione()<<", Disponibilita': "<<getDisponibilita()
   <<", Durata: "<<getDurata()<<", Artista: "<<getArtista()<<", Genere: "<<getGenereCD()<<", Numero brani: "<<getNumeroBrani()<<std::endl;
 }
+
+QJsonObject CD::toJson() const {
+    QJsonObject jsonObj;
+    jsonObj["tipo"] = QString::fromStdString("CD");
+    jsonObj["titolo"] = QString::fromStdString(this->getTitolo());
+    jsonObj["descrizione"] = QString::fromStdString(this->getDescrizione());
+    jsonObj["disponibilita"] = this->getDisponibilita();
+    jsonObj["durata"] = this->getDurata();
+    jsonObj["artista"] = QString::fromStdString(artista);
+    jsonObj["genereCD"] = QString::fromStdString(genere);
+    jsonObj["numBrani"] = numBrani;
+    return jsonObj;
+}
+
+void CD::fromJson(const QJsonObject& jsonObj) {
+    QString tit = jsonObj["titolo"].toString();
+    QString des = jsonObj["descrizione"].toString();
+    int dis = jsonObj["disponibilita"].toInt();
+
+    QString art = jsonObj["artista"].toString();
+    int dur = jsonObj["durata"].toInt();
+    QString genCD = jsonObj["genereCD"].toString();
+    int numBr = jsonObj["numBrani"].toInt();
+
+    //CD* cd = new CD();
+    this->setTitolo(tit.toStdString());
+    this->setDescrizione(des.toStdString());
+    this->setDisponibilita(dis);
+    this->setArtista(art.toStdString());
+    this->setDurata(dur);
+    this->setGenereCD(genCD.toStdString());
+    this->setNumeroBrani(numBr);
+    //return cd;
+}

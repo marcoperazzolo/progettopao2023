@@ -3,7 +3,7 @@
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     //FINESTRA E WIDGET
     setWindowTitle("Progetto Biblioteca");
-    setGeometry(100, 100, 1200, 400);
+    setGeometry(100, 100, 1200, 820);
     centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     menuBiblioteca->addAction(actionSalva);                //menuBiblioteca->addAction(actionAggiungiArticolo);
     //aggiungo Menu alla barra
     menuBar->addMenu(menuBiblioteca);
+    connect(actionApri, &QAction::triggered, this, &MainWindow::apriFile);
+    connect(actionSalva, &QAction::triggered, this, &MainWindow::salvaFile);
 
     //LAYOUT RICERCA E BOTTONI
     barraRicerca = new QTextEdit(centralWidget);
@@ -40,7 +42,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     //LISTA ARTICOLI
     listaarticoli = new ListaArticoli(centralWidget);
 
-    DVD* Oppenheimer = new DVD("Oppenheimer", "Storia bomba atomica", 9, 180, "Nolan", 5);
+    /*DVD* Oppenheimer = new DVD("Oppenheimer", "Storia bomba atomica", 9, 180, "Nolan", 5);
     CD* Utopia = new CD("Utopia", "Album dell'anno", 5, 120, "Travis Scott", "Rap", 12);
     Romanzo* PiccoloPrincipe = new Romanzo("Piccolo Principe", "Principe bambino", 0, "Santoine Exupery", "Bohnomelli", 150,  "Bambini");
     Manuale* Bricolage = new Manuale("Bricolage", "Manuale", 6, "Boscaiolo", "Legnosi", 150,  "Manodopera");
@@ -50,7 +52,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     listaarticoli->aggiungiArticolo(Oppenheimer);
     listaarticoli->aggiungiArticolo(Utopia);
-    listaarticoli->aggiungiArticolo(PiccoloPrincipe);
+    listaarticoli->aggiungiArticolo(PiccoloPrincipe);*/
 
 
     //SETTING FINALE LAYOUT
@@ -82,6 +84,7 @@ void MainWindow::eliminaArticolo(Articolo* art){
 
 void MainWindow::refresh(){
     listaarticoli->refreshLista();
+    update();
 }
 
 void MainWindow::apriFinestraAggiunta(){
@@ -133,5 +136,27 @@ void MainWindow::cercaButtonPremuto(){
                 update();
             }
         }
+    }
+}
+
+void MainWindow::apriFile() {
+    QString filePath = QFileDialog::getOpenFileName(this, "Apri File JSON", QDir::homePath(), "File JSON (*.json)");
+
+    if (!filePath.isEmpty()) {
+        listaarticoli->clear();
+        refresh();
+
+        listaarticoli->getLista()->importFromJson(filePath);
+        listaarticoli->aggiornaListadaLista(listaarticoli->getLista());
+        listaarticoli->refreshLista();
+        refresh();
+    }
+}
+
+void MainWindow::salvaFile() {
+    QString filePath = QFileDialog::getSaveFileName(this, "Salva File JSON", QDir::homePath(), "File JSON (*.json)");
+
+    if (!filePath.isEmpty()) {
+        listaarticoli->getLista()->exportToJson(filePath);
     }
 }

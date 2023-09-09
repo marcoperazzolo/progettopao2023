@@ -55,9 +55,7 @@ SUBDIRS += \
     View/untitled.pro
 
 RESOURCES += \
-    View/resources.qrc \
-    View/resources.qrc
+    risorse.qrc
 
 DISTFILES += \
-    README.md \
-    View/dvd.png
+    README.md

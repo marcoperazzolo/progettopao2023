@@ -63,3 +63,35 @@ void DVD::mostraDettagli() const{
   std::cout<<"Titolo: "<<getTitolo()<<", Descrizione: "<<getDescrizione()<<", Disponibilita': "<<getDisponibilita()
   <<", Durata: "<<getDurata()<<", Regista: "<<getRegista()<<", Voto della critica: "<<getVoto()<<std::endl;
 }
+
+QJsonObject DVD::toJson() const {
+    QJsonObject jsonObj;
+    jsonObj["tipo"] = QString::fromStdString("DVD");
+    jsonObj["titolo"] = QString::fromStdString(this->getTitolo());
+    jsonObj["descrizione"] = QString::fromStdString(this->getDescrizione());
+    jsonObj["disponibilita"] = this->getDisponibilita();
+    jsonObj["durata"] = this->getDurata();
+    jsonObj["regista"] = QString::fromStdString(regista);
+    jsonObj["voto"] = voto;
+    jsonObj["durata"] = this->getDurata();
+    return jsonObj;
+}
+
+void DVD::fromJson(const QJsonObject& jsonObj) {
+    QString tit = jsonObj["titolo"].toString();
+    QString des = jsonObj["descrizione"].toString();
+    int dis = jsonObj["disponibilita"].toInt();
+
+    int dur = jsonObj["durata"].toInt();
+
+    QString reg = jsonObj["regista"].toString();
+    int vot = jsonObj["voto"].toInt();
+
+    this->setTitolo(tit.toStdString());
+    this->setDescrizione(des.toStdString());
+    this->setDisponibilita(dis);
+    this->setDurata(dur);
+
+    this->setRegista(reg.toStdString());
+    this->setVoto(vot);
+}

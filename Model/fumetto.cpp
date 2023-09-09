@@ -60,3 +60,42 @@ void Fumetto::mostraDettagli() const{
     std::cout<<"Titolo: "<<getTitolo()<<", Descrizione: "<<getDescrizione()<<", Disponibilita': "<<getDisponibilita()
     <<", Autore: "<<getAutore()<<", Editore: "<<getEditore()<<", Numero di pagine: "<<getPagine()<<", Rivista numero: "<<getNumero()<<std::endl;
 }
+
+QJsonObject Fumetto::toJson() const {
+    QJsonObject jsonObj;
+    jsonObj["tipo"] = QString::fromStdString("Fumetto");
+    jsonObj["titolo"] = QString::fromStdString(this->getTitolo());
+    jsonObj["descrizione"] = QString::fromStdString(this->getDescrizione());
+    jsonObj["disponibilita"] = this->getDisponibilita();
+    jsonObj["autore"] = QString::fromStdString(this->getAutore());
+    jsonObj["numpagine"] = this->getPagine();
+    jsonObj["editore"] = QString::fromStdString(this->getEditore());
+    jsonObj["numfumetto"] = this->getNumero();
+    return jsonObj;
+}
+
+void Fumetto::fromJson(const QJsonObject& jsonObj) {
+    QString tit = jsonObj["titolo"].toString();
+    QString des = jsonObj["descrizione"].toString();
+    int dis = jsonObj["disponibilita"].toInt();
+
+    QString aut = jsonObj["autore"].toString();
+    int numpag = jsonObj["numpagine"].toInt();
+    QString edit = jsonObj["edit"].toString();
+
+    int numfum = jsonObj["numfumetto"].toInt();
+
+    //Fumetto* fumetto = new Fumetto();
+
+    this->setTitolo(tit.toStdString());
+    this->setDescrizione(des.toStdString());
+    this->setDisponibilita(dis);
+
+    this->setAutore(aut.toStdString());
+    this->setPagine(numpag);
+    this->setEditore(edit.toStdString());
+
+    this->setNumero(numfum);
+
+    //return fumetto;
+}

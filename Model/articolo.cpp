@@ -90,3 +90,15 @@ void Articolo::modifica2(){
 void Articolo::mostraDettagli() const{
   std::cout<<"Titolo: "<<getTitolo()<<", Descrizione: "<<getDescrizione()<<", Disponibilita': "<<getDisponibilita()<<std::endl;
 }
+
+/*Articolo* Articolo::fromJson(const QJsonObject& jsonObj) {
+
+}
+
+QJsonObject Articolo::toJson() const {
+    QJsonObject jsonObj;
+    jsonObj["titolo"] = QString::fromStdString(titolo);
+    jsonObj["descrizione"] = QString::fromStdString(descrizione);
+    jsonObj["disponibilita"] = disponibilita;
+    return jsonObj;
+}*/

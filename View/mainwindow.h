@@ -24,6 +24,8 @@
 #include "finestraaggiungiarticolo.h"
 
 #include<QDialog>
+#include<QFileDialog>
+#include<QDir>
 
 
 class MainWindow : public QMainWindow {
@@ -83,6 +85,8 @@ public slots:
     //void mostraNuovaLista(ListaArticoli* nuovavista);
     //void ripristinaVista();
 
+    void apriFile();
+    void salvaFile();
 };
 
 #endif // MAINWINDOW_H

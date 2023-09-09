@@ -61,3 +61,40 @@ void Romanzo::mostraDettagli() const{
     std::cout<<"Titolo: "<<getTitolo()<<", Descrizione: "<<getDescrizione()<<", Disponibilita': "<<getDisponibilita()
     <<", Autore: "<<getAutore()<<", Editore: "<<getEditore()<<", Numero di pagine: "<<getPagine()<<", Genere: "<<getGenereRomanzo()<<std::endl;
 }
+
+QJsonObject Romanzo::toJson() const {
+    QJsonObject jsonObj;
+    jsonObj["tipo"] = QString::fromStdString("Romanzo");
+
+    jsonObj["titolo"] = QString::fromStdString(this->getTitolo());
+    jsonObj["descrizione"] = QString::fromStdString(this->getDescrizione());
+    jsonObj["disponibilita"] = this->getDisponibilita();
+    jsonObj["autore"] = QString::fromStdString(this->getAutore());
+    jsonObj["numpagine"] = this->getPagine();
+    jsonObj["editore"] = QString::fromStdString(this->getEditore());
+
+    jsonObj["genererom"] = QString::fromStdString(this->getGenereRomanzo());
+    return jsonObj;
+}
+
+void Romanzo::fromJson(const QJsonObject& jsonObj) {
+    QString tit = jsonObj["titolo"].toString();
+    QString des = jsonObj["descrizione"].toString();
+    int dis = jsonObj["disponibilita"].toInt();
+
+    QString aut = jsonObj["autore"].toString();
+    int numpag = jsonObj["numpagine"].toInt();
+    QString edit = jsonObj["editore"].toString();
+
+    QString genererom = jsonObj["genererom"].toString();
+
+    this->setTitolo(tit.toStdString());
+    this->setDescrizione(des.toStdString());
+    this->setDisponibilita(dis);
+
+    this->setAutore(aut.toStdString());
+    this->setPagine(numpag);
+    this->setEditore(edit.toStdString());
+    this->setGenereRomanzo(genererom.toStdString());
+
+}

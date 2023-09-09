@@ -7,6 +7,11 @@ using std::string;
 using std::cin;
 //c++ Model/articolo.cpp main.cpp -o main
 
+
+
+#include <QJsonObject>
+
+
 class Articolo {
 private:
   string titolo;
@@ -65,6 +70,9 @@ public:
     int newDurata=0, const string& newRegista="", double newVoto=0, const string& newArtista="", const string& newGenereCD="", int newNumeroBrani=0);
   virtual void modifica2();//opzione alternativa che usa dei cin
   virtual void mostraDettagli() const;
+
+  virtual QJsonObject toJson() const = 0;
+  virtual void fromJson(const QJsonObject& jsonObj) = 0;
 };
 
 #endif // ARTICOLO_H

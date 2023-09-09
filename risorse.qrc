@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/img"/>
+    <qresource lang="img" prefix="/img"/>
+    <qresource prefix="/">
+        <file>img/romanzo.png</file>
+        <file>img/manuale.png</file>
+        <file>img/fumetto.png</file>
+        <file>img/dvd.png</file>
+        <file>img/cd.png</file>
+    </qresource>
+</RCC>

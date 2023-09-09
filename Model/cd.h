@@ -30,6 +30,9 @@ public:
         int newDurata=0, const string& newRegista="", double newVoto=0, const string& newArtista="", const string& newGenereCD="", int newNumeroBrani=0);
     virtual void modifica2();
     virtual void mostraDettagli() const;
+
+    QJsonObject toJson() const;
+    void fromJson(const QJsonObject& jsonObj);
 };
 
 #endif // CD_H

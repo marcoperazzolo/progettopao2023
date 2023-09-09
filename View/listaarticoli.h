@@ -15,7 +15,7 @@ private:
 public:
     //COSTRUTTORI
     ListaArticoli(QWidget* parent = nullptr);
-    ListaArticoli(Lista<Articolo>* lis, QWidget* parent = nullptr);
+    void aggiornaListadaLista(Lista<Articolo>* lis);
     ~ListaArticoli();
     Lista<Articolo>* getLista() const;
 public slots:
@@ -27,7 +27,9 @@ public slots:
 
     //REFRESH
     void refreshLista();
-
+    void refreshLista(Lista<Articolo>* lis);
+    //void setModel();
+    void clear();
     //void cercaDaBarra(string titolo, MainWindow* parent = nullptr);
     //Lista<Articolo>* creaListaRisultati(string titolo);
 

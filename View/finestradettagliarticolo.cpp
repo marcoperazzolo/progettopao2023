@@ -53,6 +53,7 @@ FinestraDettagliArticolo::FinestraDettagliArticolo(Articolo* art, QWidget* paren
     riga->addWidget(immagineLabel);
     testi->addWidget(titoloLabel);
     testi->addWidget(descrizioneLabel);
+    testi->addWidget(disponibilita);
     testi->addWidget(disponibilitaLabel);
     testi->addStretch();
     riga->addLayout(testi);
@@ -69,40 +70,54 @@ FinestraDettagliArticolo::FinestraDettagliArticolo(Articolo* art, QWidget* paren
         layout->addWidget(durataLabel);
 
         if(dynamic_cast<CD*>(articolo)){
+            artista = new QLabel(QString("Artista:"));
             artistaLabel = new QLabel(QString::fromStdString(articolo->getArtista()), this);
+            genere = new QLabel(QString("Genere:"));
             genereMusicaleLabel = new QLabel(QString::fromStdString(articolo->getGenereCD()), this);
             numbrani = new QLabel(QString("Num. Brani:"));
             numbraniLabel = new QLabel(QString::number(articolo->getNumeroBrani()), this);
+            layout->addWidget(artista);
             layout->addWidget(artistaLabel);
+            layout->addWidget(genere);
             layout->addWidget(genereMusicaleLabel);
             layout->addWidget(numbrani);
             layout->addWidget(numbraniLabel);
         }
         if(dynamic_cast<DVD*>(articolo)){
+            regista = new QLabel(QString("Regista:"));
             registaLabel = new QLabel(QString::fromStdString(articolo->getRegista()), this);
             voto = new QLabel(QString("Voto Critica:"));
             votoLabel = new QLabel(QString::number(articolo->getVoto()), this);
+            layout->addWidget(regista);
             layout->addWidget(registaLabel);
             layout->addWidget(voto);
             layout->addWidget(votoLabel);
         }
     }
     if(dynamic_cast<Libro*>(articolo)){
+        autore = new QLabel(QString("Autore:"));
         autoreLabel = new QLabel(QString::fromStdString(articolo->getAutore()), this);
         pagine = new QLabel(QString("Pagine:"));
         pagineLabel = new QLabel(QString::number(articolo->getPagine()), this);
+        editore = new QLabel(QString("Editore:"));
         editoreLabel = new QLabel(QString::fromStdString(articolo->getEditore()), this);
+        layout->addWidget(autore);
         layout->addWidget(autoreLabel);
         layout->addWidget(pagine);
         layout->addWidget(pagineLabel);
+        layout->addWidget(editore);
         layout->addWidget(editoreLabel);
 
         if(dynamic_cast<Romanzo*>(articolo)){
+            genere = new QLabel(QString("Genere:"));
             genereLabel = new QLabel(QString::fromStdString(articolo->getGenereRomanzo()), this);
+            layout->addWidget(genere);
             layout->addWidget(genereLabel);
         }
         if(dynamic_cast<Manuale*>(articolo)){
+            argomento = new QLabel(QString("Argomento:"));
             argomentoLabel = new QLabel(QString::fromStdString(articolo->getArgomento()), this);
+            layout->addWidget(argomento);
             layout->addWidget(argomentoLabel);
         }
         if(dynamic_cast<Fumetto*>(articolo)){

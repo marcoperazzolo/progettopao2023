@@ -42,16 +42,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     //LISTA ARTICOLI
     listaarticoli = new ListaArticoli(centralWidget);
 
-    DVD* Oppenheimer = new DVD("Oppenheimer", "Storia bomba atomica", 9, 180, "Nolan", 5);
-    CD* Utopia = new CD("Utopia", "Album dell'anno", 5, 120, "Travis Scott", "Rap", 12);
-    Romanzo* PiccoloPrincipe = new Romanzo("Piccolo Principe", "Principe bambino", 0, "Santoine Exupery", "Bohnomelli", 150,  "Bambini");
-    Manuale* Bricolage = new Manuale("Bricolage", "Manuale", 6, "Boscaiolo", "Legnosi", 150,  "Manodopera");
-    Fumetto* Topolino = new Fumetto("Topolino", "Paperinik e Topolino", 133, "Topolino spa", "Kinder", 150,  352);
-    listaarticoli->aggiungiArticolo(Bricolage);
-    listaarticoli->aggiungiArticolo(Topolino);
-    listaarticoli->aggiungiArticolo(Oppenheimer);
-    listaarticoli->aggiungiArticolo(Utopia);
-    listaarticoli->aggiungiArticolo(PiccoloPrincipe);
+    Manuale* Startup = new Manuale("Apri un file!", "Premi Biblioteca e poi 'Apri' in alto a sinistra per caricare un file JSON!", 1, "Marco Perazzolo e Niccolo Carlesso", "UniPD", 100,  "PAO2 Informatica");
+    Romanzo* Startup2 = new Romanzo("Oppure cliccami!", "Per aprire la finestra dei dettagli!", 1, "Marco Perazzolo e Niccolo Carlesso", "UniPD", 100,  "PAO2 Informatica");
+
+    listaarticoli->aggiungiArticolo(Startup);
+    listaarticoli->aggiungiArticolo(Startup2);
+
 
 
     //SETTING FINALE LAYOUT

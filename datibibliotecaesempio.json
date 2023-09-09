@@ -1,0 +1,53 @@
+{
+    "lista": [
+        {
+            "autore": "Lev Tolstoj",
+            "descrizione": "Guerra e pace è un romanzo storico di Lev Tolstoj. Scritto tra il 1863 e il 1869",
+            "disponibilita": 2,
+            "editore": "Feltrinelli",
+            "genererom": "Romanzo storico",
+            "numpagine": 1415,
+            "tipo": "Romanzo",
+            "titolo": "Guerra e pace"
+        },
+        {
+            "artista": "Micheal Jackson",
+            "descrizione": "Thriller è il sesto album in studio del cantautore statunitense Michael Jackson, pubblicato il 30 novembre 1982 ",
+            "disponibilita": 3,
+            "durata": 45,
+            "genereCD": "Pop, R&B",
+            "numBrani": 9,
+            "tipo": "CD",
+            "titolo": "Thriller"
+        },
+        {
+            "descrizione": "Storia della vita del fisico Robert J Oppenheimer, l'inventore della bomba atomica",
+            "disponibilita": 35,
+            "durata": 180,
+            "regista": "Christopher Nolan",
+            "tipo": "DVD",
+            "titolo": "Oppenheimer",
+            "voto": 4.5
+        },
+        {
+            "autore": "Walt Disney",
+            "descrizione": "Topolino è il settimanale Disney di fumetti e attualità che da oltre 70 anni appassiona grandi e piccoli.",
+            "disponibilita": 14,
+            "editore": "Mondadori",
+            "numfumetto": 594,
+            "numpagine": 132,
+            "tipo": "Fumetto",
+            "titolo": "Topolino"
+        },
+        {
+            "argomento": "Meccanica",
+            "autore": "Luigi Caligaris",
+            "descrizione": "Elettrotecnica ed elettronica di base, tecnologia meccanica",
+            "disponibilita": 3,
+            "editore": "HOEPLI",
+            "numpagine": 2200,
+            "tipo": "Manuale",
+            "titolo": "Manuale del manutentore"
+        }
+    ]
+}

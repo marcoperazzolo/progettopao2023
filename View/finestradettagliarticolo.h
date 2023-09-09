@@ -36,23 +36,29 @@ private:
         QLabel* durata;
         QLabel* durataLabel;
     //CD
+        QLabel* artista;
         QLabel* artistaLabel;
+        QLabel* genere;
         QLabel* genereMusicaleLabel;
         QLabel* numbrani;
         QLabel* numbraniLabel;
     //DVD
+        QLabel* regista;
         QLabel* registaLabel;
         QLabel* voto;
         QLabel* votoLabel;
 
     //Libro
+        QLabel* autore;
         QLabel* autoreLabel;
         QLabel* pagine;
         QLabel* pagineLabel;
+        QLabel* editore;
         QLabel* editoreLabel;
     //Romanzo
         QLabel* genereLabel;
     //Manuale
+        QLabel* argomento;
         QLabel* argomentoLabel;
     //Fumetto
         QLabel* numero;

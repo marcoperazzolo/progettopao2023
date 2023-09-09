@@ -42,13 +42,13 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     //LISTA ARTICOLI
     listaarticoli = new ListaArticoli(centralWidget);
 
-    Manuale* Startup = new Manuale("Apri un file!", "Premi Biblioteca e poi 'Apri' in alto a sinistra per caricare un file JSON!", 1, "Marco Perazzolo e Niccolo Carlesso", "UniPD", 100,  "PAO2 Informatica");
-    Romanzo* Startup2 = new Romanzo("Oppure cliccami!", "Per aprire la finestra dei dettagli!", 1, "Marco Perazzolo e Niccolo Carlesso", "UniPD", 100,  "PAO2 Informatica");
+    Manuale* Startup = new Manuale("Apri un file!", "Premi Biblioteca in alto a sinistra e poi Apri per caricare un file JSON!", 1, "Marco Perazzolo e Niccolo Carlesso", "UniPD", 100,  "PAO2 Informatica");
+    Romanzo* Startup2 = new Romanzo("Cliccami!", "Per aprire la finestra dei dettagli!", 1, "Marco Perazzolo e Niccolo Carlesso", "UniPD", 100,  "Premi qui sotto per modificare i campi!");
+    Fumetto* Startup3 = new Fumetto("Crea un articolo!", "Premi Aggiungi Articolo in alto a destra per aggiungere un articolo alla libreria!", 1, "Marco Perazzolo e Niccolo Carlesso", "UniPD", 100, 1);
 
     listaarticoli->aggiungiArticolo(Startup);
     listaarticoli->aggiungiArticolo(Startup2);
-
-
+    listaarticoli->aggiungiArticolo(Startup3);
 
     //SETTING FINALE LAYOUT
     mainLayout->addWidget(menuBar);

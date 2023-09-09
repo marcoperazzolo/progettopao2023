@@ -60,8 +60,6 @@ private:
     QString tipoArticolo;
     QComboBox* tipoArticoloComboBox;
     //BUTTONS
-
-    //QPushButton* confermaButton;
     QPushButton* confermaCDButton;
     QPushButton* confermaDVDButton;
     QPushButton* confermaManualeButton;

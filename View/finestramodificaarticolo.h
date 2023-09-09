@@ -51,8 +51,7 @@ signals:
 
 public slots:
     void confermaModifiche();
-    void eliminaArticolo(); //Emesso quando un viene premuto Elimina su wart e art, risponde la Listaarticoli
-    //void modificatoArticolo(WidgetArticolo* wart, Articolo* art); //Emesso quando viene premuto Conferma, teoricamente l'articolo è già stato modificato bisogna aggiornare la vista
+    void eliminaArticolo();
 };
 
 #endif // FINESTRAMODIFICAARTICOLO_H

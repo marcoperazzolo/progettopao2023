@@ -17,21 +17,21 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     //Actions: le aggiungo al menu
     actionApri = new QAction("Apri", menuBiblioteca);
     actionSalva = new QAction("Salva", menuBiblioteca);
+    actionAggiungiArticolo = new QAction("Aggiungi Articolo", menuBiblioteca);
     menuBiblioteca->addAction(actionApri);
-    menuBiblioteca->addAction(actionSalva);                //menuBiblioteca->addAction(actionAggiungiArticolo);
+    menuBiblioteca->addAction(actionSalva);
+    menuBiblioteca->addAction(actionAggiungiArticolo);
     //aggiungo Menu alla barra
     menuBar->addMenu(menuBiblioteca);
     connect(actionApri, &QAction::triggered, this, &MainWindow::apriFile);
     connect(actionSalva, &QAction::triggered, this, &MainWindow::salvaFile);
+    connect(actionAggiungiArticolo, &QAction::triggered, this, &MainWindow::apriFinestraAggiunta);
 
     //LAYOUT RICERCA E BOTTONI
     barraRicerca = new QTextEdit(centralWidget);
-    barraRicerca->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed); // Imposta la politica di ridimensionamento
-    barraRicerca->setMaximumHeight(barraRicerca->fontMetrics().height()); // Imposta l'altezza massima
-    //barraRicerca->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Rimuovi la barra di scorrimento orizzontale
-    barraRicerca->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); // Rimuovi la barra di scorrimento verticale
-    //barraRicerca->setStyleSheet("QTextEdit { padding: 1px 0; }"); // Imposta il padding per evitare i movimenti leggeri durante la scrittura
-    //barraRicerca->setWordWrapMode(QTextOption::NoWrap);
+    barraRicerca->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    barraRicerca->setMaximumHeight(barraRicerca->fontMetrics().height());
+    barraRicerca->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     cercaButton = new QPushButton("Cerca", centralWidget);
     aggiungiArticoloButton = new QPushButton("Aggiungi Articolo", centralWidget);
@@ -42,24 +42,22 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     //LISTA ARTICOLI
     listaarticoli = new ListaArticoli(centralWidget);
 
-    /*DVD* Oppenheimer = new DVD("Oppenheimer", "Storia bomba atomica", 9, 180, "Nolan", 5);
+    DVD* Oppenheimer = new DVD("Oppenheimer", "Storia bomba atomica", 9, 180, "Nolan", 5);
     CD* Utopia = new CD("Utopia", "Album dell'anno", 5, 120, "Travis Scott", "Rap", 12);
     Romanzo* PiccoloPrincipe = new Romanzo("Piccolo Principe", "Principe bambino", 0, "Santoine Exupery", "Bohnomelli", 150,  "Bambini");
     Manuale* Bricolage = new Manuale("Bricolage", "Manuale", 6, "Boscaiolo", "Legnosi", 150,  "Manodopera");
     Fumetto* Topolino = new Fumetto("Topolino", "Paperinik e Topolino", 133, "Topolino spa", "Kinder", 150,  352);
     listaarticoli->aggiungiArticolo(Bricolage);
     listaarticoli->aggiungiArticolo(Topolino);
-
     listaarticoli->aggiungiArticolo(Oppenheimer);
     listaarticoli->aggiungiArticolo(Utopia);
-    listaarticoli->aggiungiArticolo(PiccoloPrincipe);*/
+    listaarticoli->aggiungiArticolo(PiccoloPrincipe);
 
 
     //SETTING FINALE LAYOUT
     mainLayout->addWidget(menuBar);
     mainLayout->addLayout(searchLayout);
     mainLayout->addWidget(listaarticoli);
-    //listaOggetti->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 
     connect(cercaButton, &QPushButton::clicked, this, &MainWindow::cercaButtonPremuto);
     connect(listaarticoli, &ListaArticoli::itemDoubleClicked, this, &MainWindow::mostraDettagliArticolo);

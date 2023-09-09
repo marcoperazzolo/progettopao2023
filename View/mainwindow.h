@@ -32,15 +32,14 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 private:
     ListaArticoli* listaarticoli;
+
     FinestraDettagliArticolo* finestradettarticolo;
-    //FinestraAggiungiArticolo* finestraaggiunta;
 
     WidgetArticolo* widgetItem;
     WidgetArticolo* wasource;
     WidgetArticolo* wadettaglio;
 
     //FINESTRE E WIDGET CENTRALE
-    //QMainWindow w;
     QWidget* centralWidget;
 
     //LAYOUT
@@ -54,36 +53,29 @@ private:
     // Actions
     QAction* actionApri;
     QAction* actionSalva;
+    QAction* actionAggiungiArticolo;
 
     //LAYOUT RICERCA E BOTTONI
     QTextEdit* barraRicerca;
     QPushButton* cercaButton;
     QPushButton* aggiungiArticoloButton;
 
+    //Ricerca
     ListaArticoli* listarisultati;
     string titolocercato;
-    //SCROLLBAR E OGGETTI
-    //QListWidget* listaOggetti = new QListWidget(centralWidget);
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-
-    //void aggiungiArticolo(Articolo* a);
-    //void aggiungiArticolo(std::string tit="!Titolo non inizializzato!", std::string desc="!Descrizione non inizializzata", int disp=0);
-
 public slots:
-    void refresh(); //serve a refreshare la lista oggetti
+    void refresh();
     void mostraDettagliArticolo(QListWidgetItem* item);
     void apriFinestraAggiunta();
     void aggiungiArticolo(Articolo* art);
     void eliminaArticolo(Articolo* art);
 
     void cercaButtonPremuto();
-
-    //void mostraNuovaLista(ListaArticoli* nuovavista);
-    //void ripristinaVista();
 
     void apriFile();
     void salvaFile();

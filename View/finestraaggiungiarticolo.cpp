@@ -119,10 +119,8 @@ FinestraAggiungiArticolo::FinestraAggiungiArticolo(QWidget* parent) : QDialog(pa
     confermaManualeButton = new QPushButton("Conferma", this);
     confermaRomanzoButton = new QPushButton("Conferma", this);
     confermaFumettoButton = new QPushButton("Conferma", this);
-    //confermaButton = new QPushButton("Conferma", this);
     annullaButton = new QPushButton("Annulla", this);
     QHBoxLayout* buttonLayout = new QHBoxLayout;
-    //buttonLayout->addWidget(confermaButton);
     buttonLayout->addWidget(confermaCDButton);
     buttonLayout->addWidget(confermaDVDButton);
     buttonLayout->addWidget(confermaManualeButton);
@@ -138,7 +136,6 @@ FinestraAggiungiArticolo::FinestraAggiungiArticolo(QWidget* parent) : QDialog(pa
     layout->addLayout(buttonLayout);
 
     //CONNECT
-    //connect(confermaButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::reject);
     connect(annullaButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::reject);
     connect(confermaCDButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::confermaAggiuntaCD);
     connect(confermaDVDButton, &QPushButton::clicked, this, &FinestraAggiungiArticolo::confermaAggiuntaDVD);
@@ -329,9 +326,7 @@ void FinestraAggiungiArticolo::confermaAggiuntaCD(){
         cd->setDisponibilita(-1);
     }
     int dur = (QString(durataLineEdit->text())).toInt(&ok);
-    //if(std::stoi(((QString(durataLineEdit->text())).toStdString()))){
     if(ok){
-        // newDurata = std::stoi(((QString(durataLineEdit->text())).toStdString()));
         cd->setDurata(dur);
     } else {
         cd->setDurata(-1);
@@ -365,9 +360,7 @@ void FinestraAggiungiArticolo::confermaAggiuntaDVD(){
         dvd->setDisponibilita(-1);
     }
     int dur = (QString(durataLineEdit->text())).toInt(&ok);
-    //if(std::stoi(((QString(durataLineEdit->text())).toStdString()))){
     if(ok){
-        // newDurata = std::stoi(((QString(durataLineEdit->text())).toStdString()));
         dvd->setDurata(dur);
     } else {
         dvd->setDurata(-1);

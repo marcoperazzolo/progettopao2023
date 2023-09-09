@@ -128,14 +128,12 @@ FinestraDettagliArticolo::FinestraDettagliArticolo(Articolo* art, QWidget* paren
 
 void FinestraDettagliArticolo::apriFinestraModifica(){
     FinestraModificaArticolo finestramodarticolo(articolo, this);
-    //connect(FinestraEliminaArticolo, SIGNAL(articoloEliminato(Articolo*)), this, SLOT(gestisciArticoloEliminato(Articolo*)));
     connect(&finestramodarticolo, SIGNAL(modificheConfermate()), this, SLOT(refreshDettagli()));
     connect(&finestramodarticolo, SIGNAL(signalEliminaArticolo(Articolo*)), this, SLOT(slotEliminaArticolo(Articolo*)));
     finestramodarticolo.exec();
 }
 
 void FinestraDettagliArticolo::slotEliminaArticolo(Articolo* art) {
-        // Emetti il segnale per passare il comando all'InterfacciaUtente
         emit articoloEliminatoSignal(art);
         accept();
 }
